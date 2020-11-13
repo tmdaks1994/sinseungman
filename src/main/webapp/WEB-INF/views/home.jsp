@@ -1,15 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page session="false" %>
-<%@ page contentType= "text/html; charset = UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
 	<title>Home</title>
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello world! 신승만입니다.
 </h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+<p> <c:out value="$ServerTime"></c:out>
+<P>  게시판글을 불러온다고 예상하면: 현재 서버의 시간은  ${serverTime}. </P>
+<script>alert('아주 끝내주는 사이트로 이동 합니다. : ${serverTime}');</script>
 </body>
 </html>
