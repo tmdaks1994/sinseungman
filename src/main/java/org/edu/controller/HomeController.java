@@ -24,16 +24,21 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
+		logger.info("환영합니다. 현재 여러분 컴퓨터 언어는 {} 입니다..", locale);
+		logger.info("환영합니다. 현재 여러분 컴퓨터 언어는" + locale + "입니다..");
+		System.out.println("위에 Locale클래스를 사용하는 이유는 다국어 지원떄문에 변수로 사용하게 됩니다.");
+		System.out.println("함수-C언어나자바스크립트와 메소드-자바,스프링에서 사용함-는 같은 대상을 가리킵니다.");
+		System.out.println("함수-메소드는 함수명('매개변수-입력값'){구현내용}형식이고, 입력값->출력값 구현됩니다.");
+		Date date = new Date(); //Data 날짜관련 클래스형 변수 date 선언했습니다.
+		//data 변수 실행가능한 변수= 클래스형 변수=Object=인스턴스라고 합니다.
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+		//DataFormat 클래스형 변수 dataFormat이 선언되었고, 실행가능한 변수로 되었다.
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		//위 변수가 실행되어서 출력된 결과값이 String클래스형 변수 formattedDate변수에 담기게 된다.
+		model.addAttribute("TomcatserverTime", formattedDate );//servertime 변수값으로 jsp파일로 이동.
+		//위 model이라는 클래스형 변수를 이용해서, serverTime변수값을 아래 home(생략.jsp)로 전송해준다.
+		return "home";//결과적으로 return 출력값이 home(생략.jsp)에 연동된다.
+		//스프링에서 뷰단으로 데이터 이동에 대한 정리
 	}
 	
 }

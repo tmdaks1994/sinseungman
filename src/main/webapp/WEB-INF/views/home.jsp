@@ -10,8 +10,8 @@
 <h1>
 	Hello world! 신승만입니다.
 </h1>
-<p> <c:out value="$ServerTime"></c:out>
-<P>  게시판글을 불러온다고 예상하면: 현재 서버의 시간은  ${serverTime}. </P>
-<script>alert('아주 끝내주는 사이트로 이동 합니다. : ${serverTime}');</script>
+<p> <c:out value="$TomcatServerTime"></c:out>
+<P>  게시판글을 불러온다고 예상하면: 현재 서버의 시간은  ${TomcatserverTime}. </P>
+<script>alert('메롱');</script>
 </body>
 </html>
