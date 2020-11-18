@@ -37,8 +37,8 @@ public class HomeController {
 		//위 변수가 실행되어서 출력된 결과값이 String클래스형 변수 formattedDate변수에 담기게 된다.
 		model.addAttribute("TomcatserverTime", formattedDate );//servertime 변수값으로 jsp파일로 이동.
 		//위 model이라는 클래스형 변수를 이용해서, serverTime변수값을 아래 home(생략.jsp)로 전송해준다.
+		System.out.println("현재서버의 시간은"+ formattedDate +"입니다.");
 		return "home";//결과적으로 return 출력값이 home(생략.jsp)에 연동된다.
 		//스프링에서 뷰단으로 데이터 이동에 대한 정리
 	}
-	
 }

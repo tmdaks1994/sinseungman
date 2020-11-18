@@ -12,6 +12,5 @@
 </h1>
 <p> <c:out value="$TomcatServerTime"></c:out>
 <P>  게시판글을 불러온다고 예상하면: 현재 서버의 시간은  ${TomcatserverTime}. </P>
-<script>alert('메롱');</script>
 </body>
 </html>
