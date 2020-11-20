@@ -72,4 +72,42 @@ margin-top:30px;
 	text-align:center; 
 }
 /* 푸터영역 끝*/
+
+/* we are페이지 영역*/
+.weare-header{
+margin-top:30px;
+text-align:center;
+}
+.section-title {
+margin-bottom:30px;
+font-size:42px;
+font-weight:normal;
+color:#3f51b5;
+letter-spacing:5px;/*글자사이간격주기*/
+}
+.werare-header p{
+color:#616161;
+line-height:1.9; /* 줄간격 단위 1.9 글자크기의 1.9배수*/
+font-size:14px;
+}
+.weare-body{
+margin-top:68px;
+}
+.weare-body li {
+text-align:center;
+margin-top:50px;
+}
+.weare-body img{
+height:220px; /*이미지는 가로or세로 크기를 지정하면 비율을 유지하며 조정된다.*/
+}
+.weare-body li h2{
+margin: 20px 0px;
+font-size:30px;
+font-weight:normal;
+color:#3f51b5;
+}
+.weare-body li p{
+font-size:14px;
+}
+/* we are페이지 영역 끝*/
 /* 모바일용 스타일지정 끝 */
