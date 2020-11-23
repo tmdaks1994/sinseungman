@@ -19,6 +19,24 @@ margin-top:30px;
 .work-section li img {
 width:100%;
 }
+.work-section li a{
+display:block;
+width:100%;
+height:100%;
+position:relative; /*a태그에서 위치를 상대위치로 지정*/
+}
+/*마우스를 롤 오버 했을때 나오는 배경색상 before가상요소 영역(아래)*/
+.work-section li a::before{
+display:block;
+background:#3f51b5; 
+position:absolute;
+width:100%;
+height:100%;
+top:0px;
+left:0px;
+content:"abc";
+opacity:0.5%; /*투명도*/ 
+}
 /*work 영역 끝*/
 </style>
 </head>
