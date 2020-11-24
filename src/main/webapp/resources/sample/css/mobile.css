@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* 모바일용 스타일지정 시작  */
+body {font-size:14px;}/*부트스트랩 css*/
 /* 헤더영역 시작 */
 .header {
 	height:80px;
