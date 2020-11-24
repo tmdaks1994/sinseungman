@@ -18,9 +18,35 @@
 <style>
 /*반응형-테블릿용(Pc) 스타일 시작*/
 @media all and (min-width:768px) {/*미디어쿼리:미디어의 가로크기가 768px 이상이면 적용*/
+.menu-toggle-btn{
+display:none;
+}
+.header .gnb{
+display:block;
+position:static;
+background:none;
+width:auto;
+float:right;
+margin-top:10px;
+}
+.header .gnb li{
+float:left;
+border:none;
+width:95px;
+}
+.header .gnb li:last-child{
+border-bottom:none;
+}
+.header .gnb li a{
+color:#3f51b5;
+}
+.header .gnb li a:hover{
+text-decoration:none;
+}
 .carousel-item, .carousel-item img {
 height:500px;
-}}
+}
+}
 /*반응형-테블릿용(Pc) 스타일 끝*/
 </style>
 <script>
