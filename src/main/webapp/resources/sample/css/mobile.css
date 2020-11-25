@@ -3,6 +3,7 @@
 body {
 	font-size:14px;
 	background:#fff;
+	line-height:1.4; /*상속 바로전에 적용한 값을 초기화(inherit) 시키는 역할*/
 	}/*부트스트랩 css영향을 무효, 사용자css로 적용*/
 /* 헤더영역 시작 */
 .header {
