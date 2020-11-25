@@ -1,3 +1,16 @@
+#### 20201125(수)
+-tr: table row : 테이블의 가로 선 영역.
+-th: table head : 테이블의 가로선내에 제일 상단에 있는 컬럼(필드) 영역.
+-td: table data : 테이블의 가로선내의 컬럼(필드)데이터 영역.
+-유스케이스다이어그램(이클립스): 관계(릴레이션-Relation)
+-관계: Generalization(일반화) - 부모-자식(상속관계)
+-관계 일반화란? 자식들(SUV,소형차,중형차,대형차)-extend -> -부모(자동차-일반화)-generalize
+-관계 include? 포함관계,footer.jsp(하단Logo) --> home.jsp <-- header.jsp(상단메뉴,로고포함)
+-관계 extend? 확장관계(상속관계)
+- HTML(Hyper-text-markup-language)+CSS(Cascade-Style-Sheet)+JS(JavaScript)
+- 위3가지 작업으로 결과물을 만드는 사람을 퍼블리셔 라고 함.=프론트엔드 개발자.
+- 웹접근성(WebAccessbility): 사이트의 장애인 이용 가능성을 체크.
+
 #### 20201124(화)
 - 실행파일 확장자. .jar(자바archive실행파일),.war(웹archive실행),
 - .apk(안드로이드Package실행),.aab(안드로이드AppBundle실행)
