@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+@media all and (min-width:1132px) {/*미디어쿼리:미디어의 가로크기가 1132px 이상이면 적용*/
+/*슬라이드 영역 시작*/
+.carousel-item, .carousel-item img {
+height:700px;
+}
+/*슬라이드 영역 끝*/
+
+/*weare 영역시작*/
+.weare-header {
+margin:0 3%;
+margin-top:30px;
+text-align:left; /*내부 글자들 좌우 정렬을 왼쪽으로 지정*/
+}
+.weare-header .section-title {
+float:left;
+width:50%;
+}
+.weare-header p {
+float:right;
+width:50%;
+position:relative;
+padding-left:20px;
+}
+.weare-header p::before {/*p태그 앞에 가상요소로 짝대기 하나 만듬*/
+position:absolute;/*weare-header영역안쪽에서 절대위치로 표시*/
+top:5px;
+left:0px;
+width:2px;
+height:40px;
+background:#ccc;
+content:"";/*짝대기 만들고 내용은 빈공간으로 처리*/
+}
+/*weare 영역 끝*/
+
+}
