@@ -42,4 +42,17 @@ margin-left:3%;
 width:25%; /*전체100/4개*/
 }
 
+.blog-section {
+margin-left:3%;
+margin-right:3%;
+}
+.blog-section h1 {
+float:left; /*세로를 가로로 변경*/
+}
+.blog-section .container {
+float:right;
+width:80%;
+}
+/*pc용 blog스타일 영역 끝*/
+
 }
