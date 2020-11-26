@@ -34,4 +34,12 @@ content:"";/*짝대기 만들고 내용은 빈공간으로 처리*/
 }
 /*weare 영역 끝*/
 
+.work-section .section-title{
+text-align:left;
+margin-left:3%;
+}
+.work-section li{
+width:25%; /*전체100/4개*/
+}
+
 }
