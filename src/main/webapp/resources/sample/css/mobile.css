@@ -256,7 +256,7 @@ border:0px;
 }
 .submit-btn{
 margin-top:10px;
-text-align:center; /*div 영역안쪽의 내용을 가운데 정렬*/
+text-align:right; /*div 영역안쪽의 내용을 가운데 정렬*/
 }
 /*contact 영역 끝*/
 /* 모바일용 스타일지정 끝 */
