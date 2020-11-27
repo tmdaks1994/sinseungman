@@ -22,6 +22,11 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@RequestMapping(value="/weare",method=RequestMethod.GET)
+	public String weare() {
+		//외부에서 /weare경로로 접근했을때, sample/weare.jsp와 매핑시키라는 의미.
+		return "sample/weare";
+	}
 	@RequestMapping(value = "/",method=RequestMethod.GET)
 	public String index() {//메소드(함수)의 구성은 리턴(출력)형태 지정 메소드명() {구현내용}<br>
 		//상단 리퀘스트매핑에서 지정한 결로로 접근을 하게 되면, 아래에 있는 index()메소드를 실행해라.<br>
