@@ -6,6 +6,10 @@ body {
 	line-height:1.4; /*상속 바로전에 적용한 값을 초기화(inherit) 시키는 역할*/
 	}/*부트스트랩 css영향을 무효, 사용자css로 적용*/
 /* 헤더영역 시작 */
+/*부트스트랩css영향을 받는 부분을 무효화 시키기(아래)*/
+ul{
+	margin-bottom:inherit !important;/*css위치와 상관없이 무조건,중요하게 적용가능*/
+}
 .header {
 	height:80px;
 	position:relative;/*상대적인 위치 다른예는 absolute절대적인 위치= fixed붙박이*/
