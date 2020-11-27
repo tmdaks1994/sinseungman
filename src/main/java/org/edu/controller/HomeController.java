@@ -22,7 +22,18 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/",method=RequestMethod.GET)
+	public String index() {//메소드(함수)의 구성은 리턴(출력)형태 지정 메소드명() {구현내용}<br>
+		//상단 리퀘스트매핑에서 지정한 결로로 접근을 하게 되면, 아래에 있는 index()메소드를 실행해라.<br>
+		//메소드명 제일 앞에 있는  public 은 접근권한에 대한 키워드<br>
+		//private(내부-현재HomeController클래스에서만 접근 가능)<br>
+		//리턴 변환 값으로 사용한 String 클래스는 문자열을 반환하고, index.jsp와 매칭되는 문자열을 반환.<br>
+		//index.jsp와 매칭되는 문자열을 반환. 상대경로 필요<br>
+		//스프링 MVC프로젝트에서 상대경로의 최상위는 views폴더가 최상위 폴더<br>
+		//접두사(prefix), 접미사 (suffix) index(접두사-파일명).jsp(접미사-확장자)<br>
+		return "sample/index";
+	}
+	/*@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("환영합니다. 현재 여러분 컴퓨터 언어는 {} 입니다..", locale);
 		logger.info("환영합니다. 현재 여러분 컴퓨터 언어는" + locale + "입니다..");
@@ -40,5 +51,5 @@ public class HomeController {
 		System.out.println("현재서버의 시간은"+ formattedDate +"입니다.");
 		return "home";//결과적으로 return 출력값이 home(생략.jsp)에 연동된다.
 		//스프링에서 뷰단으로 데이터 이동에 대한 정리
-	}
+	}*/
 }
