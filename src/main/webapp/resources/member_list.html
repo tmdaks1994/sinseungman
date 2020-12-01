@@ -155,11 +155,11 @@
     <section class="content">
       <div class="container-fluid">
  		
- 		<div class="row">
-          <div class="col-12">
-            <div class="card">
+ 		<div class="row"> <!-- 부트스트랩의 디자인클래스 row -->
+          <div class="col-12"> <!-- 그리드시스템중12가로 칼럼 width:100% -->
+            <div class="card"><!-- 부트스트랩의 카드 클래스:네모디자인 -->
               <div class="card-header">
-                <h3 class="card-title">Responsive Hover Table</h3>
+                <h3 class="card-title">멤버 검색</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -178,46 +178,41 @@
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Reason</th>
+                      <th>user_id</th> <!-- 테이블 헤드 타이틀태그th -->
+                      <th>User_name[point]</th>
+                      <th>email</th>
+                      <th>use</th>
+                      <th>regdate</th>
+                      <th>levels</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    <tr onclick="javascript:alert('상세보기는 준비중입니다.');" style="cursor:pointer;">
+                      <td><a href="#">admin</a></td>
+                      <td>관리자</td>
+                      <td>admin@abc.com</td>
+                      <td>true</td>
+                      <td>2020-12-01</td>
+                      <td><span class="badge bg-danger">ROLE_ADMIN</span></td>
                     </tr>
                     <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
+                      <td><a href="#">user</a></td>
+                      <td>사용자</td>
+                      <td>user@abc.com</td>
+                      <td>false</td>
+                      <td>2020-12-01</td>
+                      <td><span class="badge bg-danger">ROLE_USER</span></td>
+                    </tr>                
                   </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
+              <!-- 버튼영역 시작 -->
+              <div class="card-header text-center" style="border-top:1px solid #ccc;">
+              <a href="member_wirte.html" class="btn btn-primary float-right">CREATE</a>
+              <!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그로 버튼모양 만들기 -->
+              <!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스는 버튼색상을 변경하는 역할-->
+              </div>
             </div>
             <!-- /.card -->
           </div>
