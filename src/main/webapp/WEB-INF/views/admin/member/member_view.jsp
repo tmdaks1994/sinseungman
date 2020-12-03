@@ -4,7 +4,7 @@
 <!-- jstl은 jsp의 표준태그 라이브러리 입니다. java standard tag library -->  
   <%@ include file="../include/header.jsp" %>
 
-	  <!-- 대쉬보드 본문 Content Wrapper. Contains page content -->
+<!-- 대쉬보드 본문 Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- 본문헤더Content Header (Page header) -->
     <div class="content-header">
