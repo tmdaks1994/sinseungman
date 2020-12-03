@@ -58,11 +58,19 @@
 $(document).ready(function(){
 	//현재 선택된 URL 값을 가져오는 명령 
 	var current = location.pathname;
-	var current_2 = current.split("/",3)[1];
-	//alert(current);
+	var current_2 = current.split("/")[2];//split함수로 current에 있는 문자를 분리한 배열값을 반환.
+	//alert(current_2);
 	//active클래스명을 동적으로 추가할 영역은 nav-item 안쪽에 a태그의 클래스명을 추가하는 것
+	//$(this)현재 함수의 구현 대상 본인을 가리킨다.
+	//2개의 값을 비교1: a태그의 값:/admin/member_list, /admin/board_list
+	//2개의 값을 비교2: 비교대상 current_2(현재 웹브라우저의 URL값중 제일 마지막 값)
+	//includes 함수는 크롬에서만 작동이 되어서 IE에서는 작동이 안됨.
 	$(".nav-treeview li a").each(function(){
-		
+		if( $(this).attr('href').indexOF(current_2) != -1 ){
+			$(this).addClass("active");
+		} else{
+			$(this).removeClass("active");
+		}
 	});//each함수로 a태그 2개를 찾는 명령.
 });
 </script>
