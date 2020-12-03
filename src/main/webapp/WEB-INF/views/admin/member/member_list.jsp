@@ -35,7 +35,7 @@
 
                 <div class="card-tools">
                   
-                  <form name="search_form" action="/admin/member_list" method="get">
+                  <form name="search_form" action="/admin/member/member_list" method="get">
 						<div class="input-group input-group-sm">
 						<div>
                             <select name="search_type" class="form-control" >                               
@@ -71,7 +71,7 @@
                   </thead>
                   <tbody>
                     <tr onclick="javascript:location.href='/admin/member_view?user_id=admin';" style="cursor:pointer;">
-                      <td><a href="/admin/member_view?user_id=admin">admin</a></td>
+                      <td><a href="/admin/member/member_view?user_id=admin">admin</a></td>
 
                       <!-- 위의 a링크값은 리스트가 늘어날수록 동적으로 값이 user_id값이 변하게 된다. 개발자가 jsp처리 -->
                       <td>관리자</td>
@@ -81,7 +81,7 @@
                       <td><span class="badge bg-danger">ROLE_ADMIN</span></td>
                     </tr>
                     <tr>
-                      <td><a href="/admin/member_view?user_id=user">user</a></td>
+                      <td><a href="/admin/member/member_view?user_id=user">user</a></td>
                       <td>사용자</td>
                       <td>user@abc.com</td>
                       <td>false</td>
@@ -101,7 +101,7 @@
                     
             <!-- 버튼영역 시작 -->
               <div class="card-body">
-              <a href="/admin/member_write" class="btn btn-primary float-right">CREATE</a>
+              <a href="/admin/member/member_write" class="btn btn-primary float-right">CREATE</a>
               <!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그로 버튼모양 만들기 -->
               <!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스는 버튼색상을 변경하는 역할-->             
               </div>
