@@ -70,7 +70,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr onclick="javascript:location.href='/admin/member_view?user_id=admin';" style="cursor:pointer;">
+                    <tr onclick="javascript:location.href='/admin/member/member_view?user_id=admin';" style="cursor:pointer;">
                       <td><a href="/admin/member/member_view?user_id=admin">admin</a></td>
 
                       <!-- 위의 a링크값은 리스트가 늘어날수록 동적으로 값이 user_id값이 변하게 된다. 개발자가 jsp처리 -->
