@@ -1,4 +1,4 @@
-package org.edu.controller;
+package kr.or.test;
 
 public class ClassApp {
 
@@ -25,6 +25,11 @@ public class ClassApp {
 	}
 }
 
+//메소드 오버라이드 ( 메소드이름이 같은 것으 실행 - 상속관계)외
+//메소드 오버로드 (한개의 클래스에서 메소드 이름은 고유값이라서 중복해서 사용할 수 없음. 단, 매개변수가 다르면 가능
+
+//추상클래스에 대한 연습
+//추상클래스또는 인터페이스를 사용하는 목적은 두꺼운책에서 목차를 만드는 것과 똑같은 역할.
 abstract class GraphicObject {
 	int x,y;//그래픽 오브젝트 클래스 멤법변수 선언
 	abstract void draw();//명세만 있고 구현내용이 없는 (인터페이스) 추상에서도 선언
