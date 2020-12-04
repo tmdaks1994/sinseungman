@@ -9,10 +9,28 @@ public class LoopApp {
 		int cnt;//반복횟수 카운트(세는)하는 역할 변수 선언
 		//for문
 		for(cnt=0;cnt<10;cnt++) {//cnt++ => cnt=cnt+1; 의미 1씩 증가하는의미
-			System.out.println("현재 카운터는 " + numbers[cnt]);
+			//System.out.println("현재 카운터는 " + numbers[cnt]);
 			//println함수는 한번 출력후 newline 엔터치는 역할.
 			//10번 반복을 하는데, numbers[0], numbers[1],.... numbers[9] 출력
+		String[] names = {"사용자1","사용자2"};
+		
+		for(String user_name :names) {
+			//System.out.println("현재 카운터는" + names);
 		}
-	}
+		
+		String[][] members = {
+				{"admin","관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
+				{"user","사용자1","user@abc.com","false","2020-12-03","ROLE_USER"}
+		};
+		//배열타입 [][] 2차원 배열 = 표 1row,2row 리스트가 있는 줄 (여러개 라인)
 
+			System.out.println("====== 회원 리스트 ======");
+			System.out.println("user_id  user_name  email  use  regdate levels");
+			for(String[] member:members) {
+				System.out.println(member[0]+" "+member[1]+" "+member[2]+" "+member[3]+" "+member[4]+" "+member[5]);
+			}
+		
+		
+	}
+	}
 }

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
 	
 	@RequestMapping(value="/admin/board/board_list",method=RequestMethod.GET)
-	public String board_list( ) {
+	public String board_list() {
+		
 		return "admin/board/board_list";
 	}
 	@RequestMapping(value="/admin/member/member_write",method=RequestMethod.POST)
@@ -34,7 +35,13 @@ public class AdminController {
 		return "admin/member/member_view";
 	}	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list( ) {
+	public String member_list(Model model ) {
+		String[][] members = {
+				{"admin","관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
+				{"user","사용자1","user@abc.com","false","2020-12-03","ROLE_USER"}
+		};
+		//{"user_id"}
+		model.addAttribute("members", members);
 		return "admin/member/member_list";
 	}	
 	//bind: 묶는다, /admin 요청경로와 admin/home.jsp를 묶는 의미
