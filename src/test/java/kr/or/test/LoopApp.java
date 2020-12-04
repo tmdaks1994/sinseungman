@@ -12,8 +12,13 @@ public class LoopApp {
 			//System.out.println("현재 카운터는 " + numbers[cnt]);
 			//println함수는 한번 출력후 newline 엔터치는 역할.
 			//10번 반복을 하는데, numbers[0], numbers[1],.... numbers[9] 출력
-		String[] names = {"사용자1","사용자2"};
+		String[] names = {"사용자1","사용자2","사용자3"};
+		int length = names.length;
+		//임베디드 프로그램에서 char을 사용하는 이유는 메모리를 효율적으로 사용하기 위해서 char을 사용.
 		
+		//자바 ""는 문자열 데이터 감싸줄때, ''는 1개문자데이터를 감싸줄때
+		//배열타입[] 1차원배열= 가로선1row하나의 줄(라인)
+		//향상된 for문에서는 시작값,중간값,끝값이 필요x
 		for(String user_name :names) {
 			//System.out.println("현재 카운터는" + names);
 		}
