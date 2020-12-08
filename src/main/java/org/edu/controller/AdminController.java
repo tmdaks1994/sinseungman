@@ -1,6 +1,10 @@
 package org.edu.controller;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.edu.vo.MemberVO;
 import org.springframework.stereotype.Controller;
@@ -43,6 +47,22 @@ public class AdminController {
 				{"admin","관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
 				{"user","사용자1","user@abc.com","false","2020-12-03","ROLE_USER"}
 		};
+		//{"user_id":"admin","user_name":"관리자",...} 해시#데이터 타입<키(key),값(value)>(그물-낚시)
+		//Map 타입이 부모, HashMap타입 자식클래스, 관례적으로 사용, paramMap오브젝트의 확장하기 편하도록 하기 위해서 상속.
+		//Map타입을 상속받아서, HashMap타입의 오브젝트를 생성하는 방식.
+		Map<String,Integer> mapTest = new HashMap<String, Integer>();
+		String ageValue = "40";
+		int ageValue2 = 40;
+		mapTest.put("ageValue2", ageValue2);
+		mapTest.put("age", Integer.parseInt(ageValue) );//제네릭타입을 사용하면, 여기처럼 parseInt형변환을 할 필요가 없기 때문에
+		//제네릭타입의 근본목적은 데이터타입에대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서...
+		
+		Map<String, Object> paraMap = new HashMap<String, Object>();
+		paraMap.put("user_id", "admin");
+		paraMap.put("user_name", "관리자");
+		paraMap.put("age", 50);
+		System.out.println("해시데이터 출력" + paraMap);
+		
 		//members 2차원 배열 변수를 MemberVO 클래스형 오브젝트로 members_array 변경(아래)
 		MemberVO members_input = new MemberVO();
 		members_input.setUser_id("admin");
@@ -58,7 +78,11 @@ public class AdminController {
 		members_array[0] = members_input;
 		members_array[1] = members_input;
 		
-		model.addAttribute("members", members_array);//members 2차원 배열을 members_array클래스 오브젝트로 변경
+		//members_array 배열오브젝트를 Arrarys.aslist메소드로 list타입으로 변경해서 jsp로 보냄.
+		List<MemberVO> members_list = Arrays.asList(members_array);
+		List m_list = null;
+		System.out.println("List타입의 오브젝트 클래스내용을 출력 " + members_list.toString());
+		model.addAttribute("members", members_list);//members 2차원 배열을 members_array클래스 오브젝트로 변경
 		return "admin/member/member_list";
 	}	
 	//bind: 묶는다, /admin 요청경로와 admin/home.jsp를 묶는 의미

@@ -76,4 +76,10 @@ public class MemberVO {
 	public void setUpdate_date(Date update_date) {
 		this.update_date = update_date;
 	}
+	@Override
+	public String toString() {
+		return "디버그 MemberVO [user_id=" + user_id +", user_pw=" + user_pw + ", user_name=" + user_name
+				+ ", point=" + point + ", enabledd=" + enabled + ", levels=" + levels + ", reg_date=" + reg_date
+				+ ", update_date=" + update_date + "]";
+	}
 }

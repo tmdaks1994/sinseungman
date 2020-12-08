@@ -1,3 +1,9 @@
+####20201208(화)
+- 람다식: 자바버전 8부터 지원하는 축소 코딩 방식이다. -> 에로우 화살표로 익명 메소드를
+- 자바스크립트에서 코백함수 부분=>에로우 화살표로 대체해서 축약해서 표시해서 호출시 자동실행을 구현.
+- 2차원 배열타입 변수 -> 클래스 오브젝트 배열타입으로 변경
+- 제네릭: Generic 일반적인 변수 타입. Map<String,Integer> mapTest = new HashMap<String,Integer>();
+- 제네릭을 사용하는 이유: 코딩작업시 매개변수의 타입을 제한을 두어서, 값을 입출력 할 때 에러 상황을 미리 확인 하기 위해서.
 #### 20201207(월) 작업
 - 바이트스트림(문자가 아닌데이터): InputStream, OutputStream 클래스 사용. 게시판첨부파일은 바이트스트림으로 데이터를 input,output
 - 파일로부터 입/출력이 필요할때는 : FileInputStream(FileReader),FileOutputStream(FileWriter) 클래스 사용.
