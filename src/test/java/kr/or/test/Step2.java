@@ -33,7 +33,14 @@ class MemberVO {
 	
 }
 class MemberService {
-	
+	public void printMember(MemberVO[] members) {
+		//서비스 구현
+		int cnt =0;
+		for(MemberVO member:members) {
+			cnt = cnt+1;
+			System.out.println(cnt + "번째 레코드는 "+ member.toString());
+		}
+	}
 }
 public class Step2 {
 
@@ -58,6 +65,7 @@ public class Step2 {
 		members[2] = memberVO3;
 		
 		MemberService memberService = new MemberService();
+		memberService.printMember(members);//서비스 클래스의 메소드 호출
 	}
 
 }
