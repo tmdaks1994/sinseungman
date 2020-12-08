@@ -14,11 +14,13 @@ public class FileInputOutput {
 		//오브젝트, 실행가능한 클래스형 변수 생성
 		try {
 			fileInputStream = new FileInputStream("D:\\egov\\workspace\\sinseungman\\manifest.yml");
-			//fileOutputStream = new FileOutputStream("");
+			fileOutputStream = new FileOutputStream("D:\\egov\\workspace\\sinseungman\\manifest_bak.txt");
 			//지금 반복문으로 for만 사용
 			int byte_content;
 			while((byte_content = fileInputStream.read()) != -1) {
-				System.out.println("바이트형 문자 읽어 들이기 " + (char)byte_content);
+				System.out.print("바이트형 문자 읽어 들이기 " + (char)byte_content);
+				//read로 읽은 파일을 저장
+				fileOutputStream.write(byte_content);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("경로에서 파일을 찾을 수 없습니다." + e.toString());

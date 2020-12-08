@@ -1,5 +1,8 @@
 package org.edu.controller;
 
+import java.util.Date;
+
+import org.edu.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +43,22 @@ public class AdminController {
 				{"admin","관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
 				{"user","사용자1","user@abc.com","false","2020-12-03","ROLE_USER"}
 		};
-		//{"user_id"}
-		model.addAttribute("members", members);
+		//members 2차원 배열 변수를 MemberVO 클래스형 오브젝트로 members_array 변경(아래)
+		MemberVO members_input = new MemberVO();
+		members_input.setUser_id("admin");
+		members_input.setUser_name("관리자");
+		members_input.setEmail("actfd@abd.com");
+		members_input.setEnabled(true); //enabled 데이터형이 boolean이기 때문에 true,false
+		Date toDay = new Date(); // 자바의 Date클래스를 이용해서 현재 날짜를 가진 today변수 생성.
+		members_input.setReg_date(toDay); //reg_date 데이터 타입이 date형이기 때문에 java의 날짜 데이터를 입력
+		members_input.setLevels("ROLE_ADMIN");
+		members_input.setPoint(10);//point 데이터 타입이 integer형이기 때문에 숫자 입력
+		//위 memeber_input 오브젝트에는 1개의 라인만 입력 되어 있어서, 이 오브젝트를 배열 오브젝트에 저장
+		MemberVO[] members_array = new MemberVO[2]; //클래스형 오브젝트 생성
+		members_array[0] = members_input;
+		members_array[1] = members_input;
+		
+		model.addAttribute("members", members_array);//members 2차원 배열을 members_array클래스 오브젝트로 변경
 		return "admin/member/member_list";
 	}	
 	//bind: 묶는다, /admin 요청경로와 admin/home.jsp를 묶는 의미

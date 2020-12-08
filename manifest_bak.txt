@@ -1,0 +1,8 @@
+---
+applications:
+- name: sinseungman
+  memory: 1024M
+  disk_quota: 1024M
+  instances: 1 
+  host: sinseungman
+  domain: paas-ta.org
