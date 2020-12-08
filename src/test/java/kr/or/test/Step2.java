@@ -1,7 +1,5 @@
 package kr.or.test;
 
-
-
 class MemberVO {
 	//멤버변수 만들기(아래)
 	private String name;
