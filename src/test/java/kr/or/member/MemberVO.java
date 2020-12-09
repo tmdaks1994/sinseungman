@@ -28,4 +28,5 @@ public class MemberVO {
 	public String toString() {
 		return "디버그용 MemberVO [name=" + name + ", age=" + age + ", phoneNum=" + phoneNum + "]";
 	}
+	//디버그로 잡기 위해서 잘 넘겨지는지 확인하기 위해
 }

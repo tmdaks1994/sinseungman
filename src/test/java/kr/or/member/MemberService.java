@@ -6,7 +6,7 @@ public class MemberService {
 	public void printMember(MemberVO[] members) {
 		// 서비스 구현
 		int cnt = 0;
-		for (MemberVO member : members) {
+		for (MemberVO member : members) { //member에 있는 명 수만큼 돌리기 위해서 for문 사용
 			cnt = cnt + 1;
 			System.out.println(cnt + "번째 레코드는 " + member.toString());
 		}
