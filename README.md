@@ -1,3 +1,26 @@
+####20201209(수)
+- Rest API방식으로 화면을 처리것이 트렌드 입니다.(빅데이터를 시각화하는 데 RestAPI+Ajax 기술사용)
+- Rest: Representation 기존데이터를 가지고, 화면 깜빡임 없이 데이터를 재가공하는 처리.
+- REST API사용되는 기술: 데이터 전송/수신 Ajax기술(프론트-개발자)로 처리. API(서버단기술)
+- Ajax: Asyncronized Javascript and Xml 비동기 통신으로 자바스크립트로 Json(text자료)를 재처리하는 기술. 
+- prefix(jstl), suffix(servlet-context.xml)
+- prefix ,suffix 그냥 경로의 앞부분 뒷부분 생략가능하게 만드는 역할
+- @RequestMapping...반환값에서 prefix(/WEB-INF/views/)가 사용, suffix(.jsp)
+-	...
+-		return "{prefix}admin/board/board_list{suffix}";
+-	...
+- 아래에서 사용된 prefix는 생략가능하다.
+- <beans:property name="prefix" value="/WEB-INF/views/" />
+- 아래에서 사용된 suffix는 생략가능하다.
+- <beans:property name="suffix" value=".jsp" />
+- 전체 틀(아래 읽으시면) : 자바이론 공부하신, 아래 데이터 흐름을 제어하는데 사용.
+- 여러명의 회원 정보(MemberVO-자료형클래스를이용부분)를
+- 전달주고받고(MainControler-메서드,URL호출부분), 
+@@ -9,9 +20,7 @@
+- for (MemberVO member : members) {// members여러 레코드중 1개의 레코드를 member오브젝트객체로 대입
+- 1번째반복-> members[0]레코드데이터=>MemberVO member객체벼수 =>출력시 member.toString();
+- 2번째반복-> members[1]레코드데이터=>MemberVO member객체변수 =>출력시 member.toString();
+- 3번째반복-> members[2]레코드데이터=>MemberVO member객체변수 =>출력시 member.toString();
 ####20201208(화)
 - 반복문: for, forEach, while
 forEach예) for(member(변수):member_list(데이터리스트)){구현내용}
