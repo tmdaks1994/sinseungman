@@ -36,6 +36,11 @@ public class Step3 {
 		}
 		System.out.println("오늘 요일은 : "+today+"요일 입니다.");
 		
+		if(today == Week.수) {
+			System.out.println("수요일에는 축구를 합니다.");
+		}
+		else {
+			System.out.println("열심히 자바 공부를 합니다.");
+		}
 	}
-
 }

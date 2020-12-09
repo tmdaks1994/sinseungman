@@ -116,6 +116,13 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- 앞으로 추가되는 프로그램 외부모들은 아래에 추가예정 -->
+		<!-- 서버시간 가져오는 모듈 -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.6</version>
+		</dependency>
 		        
 	</dependencies>
     <build>
