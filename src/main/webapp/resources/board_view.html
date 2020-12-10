@@ -196,8 +196,53 @@
                  </div>
                  <form action="#" name="reply_form" method="post">
                  
-                 </form>
+                 <div class="card-body">
+	          	<div class="form-group">
+                   <label for="writer">Writer</label>
+                   <input type="text" class="form-control" name="writer" id="writer" placeholder="작성자를 입력해 주세요." required>
+                   <!-- 폼에서 input같은 입력태그에는 name속성이 반드시 필요!!! 이유는 DB에 입력할때-->
+                </div>
+                <div class="form-group">
+                   <label for="reply_text">Reply Text</label>
+                   <input type="text" class="form-control" name="reply_text" id="reply_text" placeholder="내용을 입력해 주세요." required>
+                </div>
+                <button type="button" class="btn btn-warning float-left mr-1 text-white">댓글등록</button>
+	          </div>
+              </form>
+              
+			<div class="timeline">
+              <div class="time-label">
+                <span class="bg-red">Reply List[1]</span>
               </div>
+              <div>
+                <i class="fas fa-envelope bg-blue"></i>
+                <div class="timeline-item">
+                  <h3 class="timeline-header">작성자</h3>
+                  
+                  <div class="timeline-body">
+                   	 댓글 입력 테스트
+                  </div>
+                  <div class="timeline-footer">
+                    <a class="btn btn-primary btn-sm">수정</a>
+                 </div>
+                </div>
+               </div>
+               
+               <div>
+                <i class="fas fa-envelope bg-blue"></i>
+                <div class="timeline-item">
+                  <h3 class="timeline-header">작성자</h3>
+                  
+                  <div class="timeline-body">
+                   	 댓글 입력 테스트2
+                  </div>
+                  <div class="timeline-footer">
+                    <a class="btn btn-primary btn-sm">수정</a>
+                 </div>
+                </div>
+               </div>
+               
+              </div> <!-- //.timeline-->
             </div> 
            <!-- 댓글영역 끝 -->
           </div><!-- //col-12 -->
