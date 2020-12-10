@@ -333,9 +333,7 @@
  <i class="fas fa-envelope bg-blue"></i>
  <div class="timeline-item">
    <h3 class="timeline-header">{{replyer}}</h3>
-   <div class="timeline-body">
-     	{{replytext}}
-   </div>
+   <div class="timeline-body">{{replytext}}</div>
    <div class="timeline-footer">
 	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#replyModal">
   		수정
@@ -388,6 +386,7 @@ $(document).ready(function(){
 		$("#rno").val($(this).attr("data-rno"));
 		$(".modal-title").html($(this).find(".timeline-header").text());
 		$("#replytext").val($(this).find(".timeline-body").text());
+		//alert("디버그"+ $(this).find(".timeline-body").text());
 		//선택한 댓글의 time-line-body영역의 text문자를 #replytext영역에 값으로 입력.
 	});
 });
