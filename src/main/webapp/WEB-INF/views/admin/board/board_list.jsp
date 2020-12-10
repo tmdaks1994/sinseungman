@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../include/header.jsp" %>
 
   <!-- 대시보드 본문 Content Wrapper. Contains page content -->
@@ -35,7 +36,7 @@
 
                 <div class="card-tools">
                   
-                  <form name="search_form" action="member_list.html" method="get">
+                  <form name="search_form" action="/admin/board/board_list.html" method="get">
                   <div class="input-group input-group-sm">
                     <!-- 부트스트랩 템플릿만으로는 디자인처리가 부족한 경우가 있기 때문에 종종 인라인 스타일 사용 -->
                     <div>
@@ -67,28 +68,24 @@
                       <th>title[replycnt]</th>
                       <th>writer</th>
                       <th>regdate</th>
-                      <th>viewcnt</th>
+                      <th>view_count</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
+                  <c:forEach items="${board_list}" var="boardVO"> <!-- admin컨트롤러에서 가져오는 board_list -->
+                  	<tr>
+                      <td>${boardVO.bno}</td>
                       <!-- 아래 a링크값은 리스트가 늘어날 수록 동적으로 bno값이 변하게 됩니다. 개발자가 jsp처리 -->
-                      <td><a href="board_view.html?bno=1">첫번째 게시물 제목[2]</a></td>
-                      <td>admin</td>
-                      <td>2020-12-09</td>
-                      <td><span class="badge bg-danger">3</span></td>
+                      <td><a href="board_view.html?bno=${boardVO.bno}">
+                      <!-- c:out 사용하는 이유 : 메롱을방지하기 위해 -->
+                      <c:out value="${boardVO.title}"></c:out>[<c:out value="${boardVO.reply}"></c:out>]
+                      </a></td>
+                      <td><c:out value="${boardVO.writer}"></c:out></td>
+                      <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
+                      <td><span class="badge bg-danger">${boardVO.view_count}</span></td>
                       <!-- 권한표시는 부트스트랩 뺏지 클래스 사용 -->
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <!-- 아래 a링크값은 리스트가 늘어날 수록 동적으로 bno값이 변하게 됩니다. 개발자가 jsp처리 -->
-                      <td><a href="board_view.html?bno=2">두번째 게시물 제목[0]</a></td>
-                      <td>user02</td>
-                      <td>2020-12-09</td>
-                      <td><span class="badge bg-danger">0</span></td>
-                      <!-- 권한표시는 부트스트랩 뺏지 클래스 사용 -->
-                    </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>
