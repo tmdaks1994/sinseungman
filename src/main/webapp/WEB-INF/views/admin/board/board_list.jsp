@@ -36,14 +36,14 @@
 
                 <div class="card-tools">
                   
-                  <form name="search_form" action="/admin/board/board_list.html" method="get">
+                  <form name="search_form" action="/admin/board/board_list" method="get">
                   <div class="input-group input-group-sm">
                     <!-- 부트스트랩 템플릿만으로는 디자인처리가 부족한 경우가 있기 때문에 종종 인라인 스타일 사용 -->
                     <div>
                         <select class="form-control">
                             <option value="" selected>-전체-</option>
-                            <option value="user_id" data-select2-id="8">제목</option>
-                            <option value="user_name" data-select2-id="16">내용</option>
+                            <option value="title" data-select2-id="8">제목</option>
+                            <option value="content" data-select2-id="16">내용</option>
                         </select>
                     </div>
                     <div>
@@ -65,20 +65,21 @@
                   <thead>
                     <tr>
                       <th>bno</th><!-- 테이블 헤드 타이틀태그th -->
-                      <th>title[replycnt]</th>
+                      <th>title[reply_count]</th>
                       <th>writer</th>
                       <th>regdate</th>
                       <th>view_count</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${board_list}" var="boardVO"> <!-- admin컨트롤러에서 가져오는 board_list -->
+                  <!-- jstl core를 갖다쓰는 이유는 향상된 for반복문을 사용하기 위해서 지정(아래) -->
+                  <c:forEach items="${board_list}" var="boardVO">
                   	<tr>
                       <td>${boardVO.bno}</td>
                       <!-- 아래 a링크값은 리스트가 늘어날 수록 동적으로 bno값이 변하게 됩니다. 개발자가 jsp처리 -->
-                      <td><a href="board_view.html?bno=${boardVO.bno}">
-                      <!-- c:out 사용하는 이유 : 메롱을방지하기 위해 -->
-                      <c:out value="${boardVO.title}"></c:out>[<c:out value="${boardVO.reply}"></c:out>]
+                      <td><a href="/admin/board/board_view?bno=${boardVO.bno}">
+                      <!-- c:out 사용하는 이유는 메롱을 방지하기 위해서 시큐어코딩처리 -->
+                      <c:out value="${boardVO.title}"></c:out>[<c:out value="${boardVO.reply_count}"></c:out>]
                       </a></td>
                       <td><c:out value="${boardVO.writer}"></c:out></td>
                       <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
@@ -86,6 +87,7 @@
                       <!-- 권한표시는 부트스트랩 뺏지 클래스 사용 -->
                     </tr>
                   </c:forEach>
+                    
                   </tbody>
                 </table>
               </div>
