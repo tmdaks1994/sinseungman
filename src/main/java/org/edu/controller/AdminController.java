@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class AdminController {
@@ -24,15 +25,25 @@ public class AdminController {
 	SecurityCode securityCode;
 	//SecurityCode securityCode2 = new SecurityCode(); 요즘은 이렇게 안함.
 	
+	@RequestMapping(value = "/admin/board/board_write", method = RequestMethod.GET)
+	public String board_write() throws Exception{		
+		return "admin/board/board_write";
+	}
+	@RequestMapping(value = "/admin/board/board_write", method = RequestMethod.POST)
+	public String board_write(MultipartFile file, BoardVO boardVO) throws Exception{
+		//post받은 boardVO 내용을 DB서비스에 입력 DB에 입력후 게시물테러를 당하지 않으려면, redirect로 이동처리한다.
+		return "redirect:/admin/board/board_list";
+	}
 	@RequestMapping(value = "/admin/board/board_view", method = RequestMethod.GET)
-	public String board_view(Model model) throws Exception {
+	public String board_view(@RequestParam("bno") Integer bno, Model model) throws Exception {
 		//jsp로 보낼 더미 데이터 boardVO에 담아서 보낸다.
+		//실제로는 아래처럼 더미데이터를 만든것이 아닌 쿼리스트링(질의 문자열)로 받아온 bno(게시물 고유번호)를 이용해서 DB에서 
+		//select * from tbl_boarad where bno = ? 실행이 된 결과값이 List<BoardVO>형으로 받아서 jsp보내줌.
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBno(1);
 		boardVO.setTitle("첫번째 게시물 입니다");
-		String xss_data = "첫번째 내용 입니다.<br>줄바꿈 처리입니다. <script>location.href('http://naver.com');</script>";
+		String xss_data = "첫번째 내용 입니다.<br><br>줄바꿈 처리입니다. <script>location.href('http://naver.com');</script>";
 		boardVO.setContent(securityCode.unscript(xss_data));
-		boardVO.setContent("첫번째 내용 입니다.<br>줄바꿈 처리입니다.");
 		boardVO.setWriter("admin");
 		Date regdate = new Date();
 		boardVO.setRegdate(regdate);
