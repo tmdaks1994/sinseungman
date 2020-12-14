@@ -17,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-
 /**
  * JUnit 자바단위테스트이고, DataSource 지정후 DB(Hsql,Mysql,Oracle) 접속,
  * 데이터베이스 테이블에 Create, Read, Update, Delete 테스트용 클래스
@@ -41,12 +40,12 @@ public class DataSourceTest {
 	@Test
 	public void selectMember() throws Exception {
 		List<MemberVO> memberList =	memberDAO.selectMember();
-		System.out.println("회원리스트 테스트 입니다.");
+		System.out.println("회원리스트 테스트");
 		System.out.println(memberList.toString());
 	}
 	@Test
 	public void dbConnectionTest() throws Exception {
-		try {//내부에서 {} 에러발생시 실행을 중지하고, catch{}구문이 실행 됩니다. 예외처리라고 합니다.
+		try {//내부에서 {} 에러발생시 실행을 중지하고, catch{}구문이 실행 됩니다. (예외처리)
 			Connection connection = dataSource.getConnection();
 			System.out.println("데이터베이스 접속이 성공하였습니다.");
 		} catch (SQLException e) {
@@ -60,5 +59,4 @@ public class DataSourceTest {
 		//fail("Not yet implemented");
 		System.out.println("JUnit테스트 시작 입니다.");
 	}
-
 }
