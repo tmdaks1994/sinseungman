@@ -18,5 +18,6 @@ public class MemberDAOImpl implements IF_MemberDAO {
 	public List<MemberVO> selectMember() throws Exception {
 		// mapper.xml에 접근하는 방법
 		return sqlSession.selectList("memberMapper.selectMember");
+		//sqlSession템플릿의 selectList 메소드를 실행하면, memberMapper,selectmember
 	}
 }
