@@ -2,15 +2,16 @@ package org.edu.util;
 
 import org.springframework.stereotype.Controller;
 
-//컨트롤러 클래스를 사용하는 이유는 스프링에서 사용가능한 빈으로 만들기 위해서.
+//컨트롤러 클래스를 사용하는 이유는 스프링에서 사용가능한 빈으로 만들기 위해서 입니다.
 @Controller
 public class SecurityCode {
 	/**
-	 * XSS 방지 처리. Cross Site Script 약자 XSS 교차사이트 스크립트 방지하는 코드
-	 * @param data
-	 * @return
-	 */
-	public String unscript(String data) {
+     * XSS 방지 처리. Cross Site Script 약자 XSS 교차 사이트스크립트 방지하는 코드(아래)
+     *
+     * @param data
+     * @return
+     */
+    public String unscript(String data) {
         if (data == null || data.trim().equals("")) {
             return "";
         }

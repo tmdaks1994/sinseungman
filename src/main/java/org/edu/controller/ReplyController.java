@@ -5,10 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * ReplyController.java 클래스
- * 
- * @author 뚫어봐
+ * 댓글 구현 Rest-API전용 컨트롤러=RestAPI서버
+ * @author 김일국
  *
  */
 @RestController
@@ -18,7 +19,7 @@ public class ReplyController {
 	public ResponseEntity<String> reply_write() {
 		ResponseEntity<String> responseEntity = 
 				new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		//ResponseEntity는 json텍스트를 반환 전송내용:"SUCCESS", 전송상태-HttpStatus.OK(200)
+		//ResponseEntity는 json텍스트를 반환하는데, 전송내용:"SUCCESS", 전송상태-HttpStatus.OK(200)
 		//전송내용:e.getMessage()실패메세지값, 전송상태-HttpStatus.BAD_REQUEST(400)
 		return responseEntity;
 	}

@@ -4,12 +4,12 @@ import java.util.Date;
 
 /**
  * 게시판에서 사용되는 데이터 입출력 클래스
- * @author 뚫어봐
+ * @author 김일국
  *
  */
 public class BoardVO {
-
-	private Integer bno; //int는 입력값이 null일때, 에러가 나오기 때문에, Integer
+	//멤버변수 선언
+	private Integer bno;//int은 입력값이 null일때 에러나기  때문에, Interger로 변경
 	private String title;
 	private String content;
 	private String writer;
@@ -18,12 +18,12 @@ public class BoardVO {
 	private Integer view_count;
 	private Integer reply_count;
 	
-	
 	@Override
 	public String toString() {
-		return "BoardVO [bno=" + bno + ", title=" + title + ", writer=" + writer + ", regdate=" + regdate
-				+ ", update_date=" + update_date + ", view_count=" + view_count + ", reply_count=" + reply_count + "]";
-	}	
+		return "디버그용 BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
+				+ regdate + ", update_date=" + update_date + ", view_count=" + view_count + ", reply_count="
+				+ reply_count + "]";
+	}
 	public Integer getBno() {
 		return bno;
 	}
@@ -36,6 +36,12 @@ public class BoardVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public String getWriter() {
 		return writer;
 	}
@@ -47,12 +53,6 @@ public class BoardVO {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
 	}
 	public Date getUpdate_date() {
 		return update_date;
@@ -72,4 +72,5 @@ public class BoardVO {
 	public void setReply_count(Integer reply_count) {
 		this.reply_count = reply_count;
 	}
+	
 }
