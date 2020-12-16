@@ -120,7 +120,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list(Model model) throws Exception {
+	public String member_list(@RequestParam(value= "search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false)
+	String search_keyword, Model model) throws Exception {
 		/*
 		 * String[][] members = {
 		 * {"admin","찐관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
@@ -131,7 +132,7 @@ public class AdminController {
 		 * HashMap<String, Integer>(); String ageValue = "40"; int ageValue2 = 40;
 		 * mapTest.put("ageValue2", ageValue2); mapTest.put("age",
 		 * Integer.parseInt(ageValue) );//제네릭타입을 사용하면, 여기처럼 parseInt형변환을 할 필요가 없기 때문에
-		 * //제네릭타입의 근본목적은 데이터타입에대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서...
+		 * //제네릭타입의 근본목적은 데이터타입에대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서...`
 		 * 
 		 * Map<String, Object> paramMap = new HashMap<String, Object>();
 		 * paramMap.put("user_id", "admin"); paramMap.put("user_name", "관리자");
@@ -154,7 +155,7 @@ public class AdminController {
 		 * Arrays.asList메서드로 List타입으로 변경해서 jsp 보냅니다. //위에서 테이터타입연습으로 총 3가지 테이터 타입을 확인했음.
 		 * System.out.println("List타입의 오브젝트 클래스내용을 출력 " + members_list.toString());
 		 */
-		List<MemberVO> members_list = memberService.selectMember();
+		List<MemberVO> members_list = memberService.selectMember(search_type,search_keyword);
 		model.addAttribute("members", members_list);//members-2차원배열을 members_array클래스오브젝트로 변경
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
