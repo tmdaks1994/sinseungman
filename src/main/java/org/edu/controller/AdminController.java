@@ -12,6 +12,7 @@ import org.edu.service.IF_MemberService;
 import org.edu.util.SecurityCode;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
+import org.edu.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,9 +121,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list(@RequestParam(value= "search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false)
-	String search_keyword, Model model) throws Exception {
-		/*
+	public String member_list(PageVO pageVO, Model model) throws Exception {
+		/* 고전적인 방식의 검색코드 (아래)
+		 * @RequestParam(value= "search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false)
+	String search_keyword
 		 * String[][] members = {
 		 * {"admin","찐관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
 		 * {"user","일반사용자","user@abc.com","false","2020-12-04","ROLE_USER"} };
@@ -155,7 +157,7 @@ public class AdminController {
 		 * Arrays.asList메서드로 List타입으로 변경해서 jsp 보냅니다. //위에서 테이터타입연습으로 총 3가지 테이터 타입을 확인했음.
 		 * System.out.println("List타입의 오브젝트 클래스내용을 출력 " + members_list.toString());
 		 */
-		List<MemberVO> members_list = memberService.selectMember(search_type,search_keyword);
+		List<MemberVO> members_list = memberService.selectMember(pageVO);
 		model.addAttribute("members", members_list);//members-2차원배열을 members_array클래스오브젝트로 변경
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
