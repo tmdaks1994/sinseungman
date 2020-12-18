@@ -15,6 +15,7 @@ import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -121,10 +122,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list(PageVO pageVO, Model model) throws Exception {
-		/* 고전적인 방식의 검색코드 (아래)
-		 * @RequestParam(value= "search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false)
-	String search_keyword
+	public String member_list(@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
+		//고전적인 방식의 검색코드(아래)
+		//@RequestParam(value="search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false) String search_keyword
+		/*
 		 * String[][] members = {
 		 * {"admin","찐관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
 		 * {"user","일반사용자","user@abc.com","false","2020-12-04","ROLE_USER"} };
@@ -134,7 +135,7 @@ public class AdminController {
 		 * HashMap<String, Integer>(); String ageValue = "40"; int ageValue2 = 40;
 		 * mapTest.put("ageValue2", ageValue2); mapTest.put("age",
 		 * Integer.parseInt(ageValue) );//제네릭타입을 사용하면, 여기처럼 parseInt형변환을 할 필요가 없기 때문에
-		 * //제네릭타입의 근본목적은 데이터타입에대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서...`
+		 * //제네릭타입의 근본목적은 데이터타입에대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서...
 		 * 
 		 * Map<String, Object> paramMap = new HashMap<String, Object>();
 		 * paramMap.put("user_id", "admin"); paramMap.put("user_name", "관리자");
@@ -159,6 +160,18 @@ public class AdminController {
 		 */
 		List<MemberVO> members_list = memberService.selectMember(pageVO);
 		model.addAttribute("members", members_list);//members-2차원배열을 members_array클래스오브젝트로 변경
+		
+		// null/10 = 에러처리(아래)
+		if(pageVO.getPage() == null) { //null체크에러가 나와서 pageVO의 변수형을 Integer로 설정
+			pageVO.setPage(1);
+		}
+		
+		pageVO.setPerPageNum(5);//리스트 하단에 보이는 페이징번호의 개수
+		pageVO.setPerQueryPageNum(10);//1페이지당 보여줄 회원수 10명으로 입력 .
+		pageVO.setTotalCount(110);//전체 회원의 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
+		model.addAttribute("pageVO", pageVO);
+		//System.out.println("시작페이지는 : " + pageVO.getStartPage());
+		//System.out.println("끝페이지는 : " + pageVO.getEndPage());
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
 	
