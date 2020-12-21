@@ -40,45 +40,62 @@
                 <strong><i class="fas fa-book mr-1"></i> user_id</strong>
                 <p class="text-muted">
                 <%--${user_id2}--%>
-                <c:out value="${user_id2}"></c:out>
+                <c:out value="${memberVO.user_id}"></c:out>
                 </p>
                 <!-- jsp에서 자바변수를 사용하는 방법Model로 수신한$ user_id 변수명으로 표시. -->
                 <hr>
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> user_name</strong>
-                <p class="text-muted">관리자</p>
+                <p class="text-muted">${memberVO.user_name}</p>
                 <!-- 부트스트랩 mr-1:margin-right: .25rem여백important -->
                 <hr>
                 <strong><i class="fas fa-pencil-alt mr-1"></i>email</strong>
-                <p class="text-muted">admin@abc.com</p>
+                <p class="text-muted">${memberVO.email}</p>
                 <hr>
                 <strong><i class="far fa-file-alt mr-1"></i> point</strong>
-                <p class="text-muted">100</p>
+                <p class="text-muted">${memberVO.point}</p>
               	<hr>
                 <strong><i class="far fa-circle mr-1"></i> enabled</strong>
-                <p class="text-muted">true</p>
+                <p class="text-muted">${memberVO.enabled}</p>
                 <hr>
                 <strong><i class="fas fa-align-left mr-1"></i> levels</strong>
-                <p class="text-muted">ROLE_ADMIN</p>
+                <p class="text-muted">${memberVO.levels}</p>
               </div>
               <!-- /.card-body -->
             </div>
 
-			
+			<form name="delete_form" id="action_form" action="">
 			<!-- 버튼영역 시작 -->
               <div class="card-body">
-				<a href="/admin/member/member_list" class="btn btn-primary float-right mr-1">LIST ALL</a>
-              	<button type="button" class="btn btn-danger float-right mr-1">DELETE</button>
-				<button type="button" class="btn btn-warning float-right mr-1 text-white">UPDATE</button>            
+				<a href="/admin/member/member_list?page=${pageVO.page}" class="btn btn-primary float-right mr-1">LIST ALL</a>
+              	<button type="button" id="deleteBtn" class="btn btn-danger float-right mr-1">DELETE</button>
+				<button type="button" id="updateBtn" class="btn btn-warning float-right mr-1 text-white">UPDATE</button>            
               </div>
             <!-- 버튼영역 끝 -->
-              
+            <input type="hidden" name="user_id" value="${memberVO.user_id}">
+            </form>
           </div>
         </div>
- 		
-      </div><!-- /.container-fluid -->
+ 		</div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
- 	 <!-- /.content-wrapper -->
-    
-    <%@ include file="../include/footer.jsp" %>
+ <!-- /.content-wrapper -->
+ 
+<%@ include file="../include/footer.jsp" %>
+
+<script>
+  $(document).ready(function(){
+    $("#deleteBtn").bind("click",function(){
+    	if(confirm("정말 삭제 하시겠습니까?")) {//confirm()자바스크립트 함수의 반환값은 true
+    		$("#action_form").attr("action","/admin/member/member_delete");
+    		$("#action_form").attr("method","post");
+    		$("#action_form").submit();
+    	}
+    });
+    $("#updateBtn").bind("click",function(){
+    	$("#action_form").attr("action","/admin/member/member_update");
+    	$("#action_form").attr("method","get");
+    	$("#action_form").submit();
+    });
+  });
+</script>

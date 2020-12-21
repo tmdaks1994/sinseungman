@@ -54,4 +54,10 @@ public class MemberDAOImpl implements IF_MemberDAO {
 		sqlSession.update("memberMapper.updateMember", memberVO);
 	}
 
+	@Override
+	public int countMember(PageVO pageVO) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.countMember", pageVO);
+	}
+
 }

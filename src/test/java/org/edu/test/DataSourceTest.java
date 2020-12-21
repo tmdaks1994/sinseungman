@@ -105,6 +105,11 @@ public class DataSourceTest {
 		PageVO pageVO = new PageVO();
 		pageVO.setSearch_type("user_name");
 		pageVO.setSearch_keyword("메렁");
+		
+		pageVO.setPage(1);
+		pageVO.setPerPageNum(5);//리스트 하단에 보이는 페이징번호의 개수
+		pageVO.setQueryPerPageNum(10);//1페이지당 보여줄 회원수 10명으로 입력 .
+		
 		List<MemberVO> memberList =	memberDAO.selectMember(pageVO);
 		System.out.println("회원리스트 테스트 입니다.");
 		System.out.println(memberList.toString());
