@@ -97,15 +97,32 @@ public class AdminController {
 	
 	//메서드 오버로딩(예, 동영상 로딩중..., 로딩된 매개변수가 다르면, 메서드이름을 중복가능합니다. 대표적인 다형성구현)
 	@RequestMapping(value="/admin/member/member_write",method=RequestMethod.POST)
-	public String member_write(@RequestParam("user_name") String user_name) throws Exception {
+	public String member_write(MemberVO memberVO) throws Exception {
 		//아래 GET방식의 폼 출력화면에서 데이터 전송받은 내용을 처리하는 바인딩.
 		//DB베이스 입력/출력/삭제/수정 처리-다음에...
+		memberService.insertMember(memberVO);
 		return "redirect:/admin/member/member_list";//절대경로로 처리된 이후에 이동할 URL주소를 여기에 반환
 	}
 	
 	@RequestMapping(value="/admin/member/member_write",method=RequestMethod.GET)
 	public String member_write() throws Exception {
 		return "admin/member/member_write";
+	}
+	
+	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.GET)
+	public String member_update(@RequestParam("user_id")String user_id, @ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
+		//GET방식으로 업데이트 form파일 보여줌.
+		MemberVO memberVO = memberService.readMember(user_id);
+		model.addAttribute("memberVO", memberVO);
+		return "admin/member/member_update";
+	}
+	
+	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.POST)
+	public String member_update(PageVO pageVO, MemberVO memberVO) throws Exception {
+		//POST방식으로 넘어온 값을 DB수정처리하는 역할
+		memberService.updateMember(memberVO);
+		//redirect를 사용하는 목적은 새로고침 했을때, 위 updateMember메서드를 재 실행방지 목적입니다.
+		return "redirect:/admin/member/member_view?page="+pageVO.getPage()+"&user_id=" + memberVO.getUser_id();
 	}
 	
 	@RequestMapping(value="/admin/member/member_delete",method=RequestMethod.POST)
@@ -171,7 +188,7 @@ public class AdminController {
 		if(pageVO.getPage() == null) { //null체크에러가 나와서 pageVO의 변수형을 Integer로 설정
 			pageVO.setPage(1);
 		}
-		pageVO.setPerPageNum(5);//리스트 하단에 보이는 페이징번호의 개수
+		pageVO.setPerPageNum(8);//리스트 하단에 보이는 페이징번호의 개수
 		pageVO.setQueryPerPageNum(10);//1페이지당 보여줄 회원수 10명으로 입력 .
 		
 		//검색된 전체회원 명수 구하기 서비스 호출
