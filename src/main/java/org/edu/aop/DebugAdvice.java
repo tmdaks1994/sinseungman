@@ -31,18 +31,19 @@ public class DebugAdvice {
 	 * 예를들면, 개발자가 만든 클래스를 실행시켰을때, 5~10분이상 느리게 진행된는 현상이 생깁니다.
 	 * 어느 메서드에서 시간 얼만큼 소요되는지 확인해야지만, 트러블 슈팅이 가능합니다.
 	 * 아래 @Around()애노테이션 클래스의 ()는 디버그할 영역지정. 
+	 * MemberService*모든 클래스(Impl)에서. 
 	 */
 	//@Around("execution(* org.edu.controller.AdminController.*(..))")
 	@Around("execution(* org.edu.service.MemberService*.*(..))")
 	public Object timeLog(ProceedingJoinPoint pjp) throws Throwable {
-		logger.debug("AOP 디버그 시작=========================");
+		logger.info("AOP 디버그 시작=========================");
 		long startTime = System.currentTimeMillis();//현재 컴퓨터시간을 저장하는 변수
-		logger.debug(Arrays.toString(pjp.getArgs()));//pjp클래스 매개변수 값 GET으로 가져와서 toString형변환 출력
+		logger.info(Arrays.toString(pjp.getArgs()));//pjp클래스 매개변수 값 GET으로 가져와서 toString형변환 출력
 		//위는 현재 시간체크하는 메서드가 어떤메서드인지 눈으로 확인하려고 logger.debug로 출력
 		Object result = pjp.proceed();//AdminController에 있는 메서드가 실행됩니다.(시간이 소요됨)
 		long endTime = System.currentTimeMillis();//현재 컴퓨터 시간을 저장하는 변수
-		logger.debug(pjp.getSignature().getName() + "메서드명의 실행시간은:" + (endTime-startTime));
-		logger.debug("AOP 디버그 끝 ==========================");
+		logger.info(pjp.getSignature().getName() + "()메소드의 실행시간은:" + (double)(endTime-startTime)/1000+"초 입니다.");
+		logger.info("AOP 디버그 끝 ==========================");
 		return result;
 	}
 }

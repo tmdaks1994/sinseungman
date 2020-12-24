@@ -34,7 +34,7 @@ public class OpenApi {
 					result = result + line + "\n"; // \n은 줄바꿈	
 				}
 				//XmlUtils.java클래스를  이용해서 xmml태그내용을 출력
-				String result_xmlUtils = XmlUtils.formatXml(result);
+				String result_xmlUtils = XmlUtils.formatXml(result); //결과를 출력했을때 사용자가 보기 편하도록 줄바꿈하여서 보여줌
 				System.out.println("읽어 들인 최종 결과 값은" + result_xmlUtils);
 			} catch (IOException e) {
 				// Http웹 접근에러상황발생
