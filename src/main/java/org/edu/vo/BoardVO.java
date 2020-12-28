@@ -18,6 +18,9 @@ public class BoardVO {
 	private Integer view_count;
 	private Integer reply_count;
 	
+	private String[] save_file_names;
+	
+	
 	@Override
 	public String toString() {
 		return "디버그용 BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
@@ -72,5 +75,10 @@ public class BoardVO {
 	public void setReply_count(Integer reply_count) {
 		this.reply_count = reply_count;
 	}
-	
+	public String[] getSave_file_names() {
+		return save_file_names;
+	}
+	public void setSave_file_names(String[] save_file_names) {
+		this.save_file_names = save_file_names;
+	}
 }
