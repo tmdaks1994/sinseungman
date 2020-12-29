@@ -36,7 +36,7 @@
 	
 	<!-- 업로드한 파일이 저장되는 위치: 로컬PC용 --> 
 	<beans:bean id="uploadPath" class="java.lang.String">
-	    <beans:constructor-arg value="C:\\egov\\workspace\\upload" />
+	    <beans:constructor-arg value="D:\\egov\\workspace\\upload" />
 	</beans:bean>
 	
 	

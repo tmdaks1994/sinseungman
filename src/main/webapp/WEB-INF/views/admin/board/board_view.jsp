@@ -27,7 +27,7 @@
     <!-- 본문내용 Main content -->
     <section class="content">
       <div class="container-fluid">
-
+        
         <div class="row"><!-- 부트스트랩의 디자인 클래스 row -->
           <div class="col-12"><!-- 그리드시스템중 12가로칼럼 width:100% -->
           <div class="card card-primary">
@@ -38,35 +38,40 @@
               <div class="card-body">
                 <strong><i class="fas fa-book mr-1"></i> title</strong>
                 <p class="text-muted">
-                <!-- 아래와 같은 출력형태는 EL표시라고 한다. 
-                EL출력은 보안에 취약하기떄문에 아래처럼 처리함.-->
-				<%--${boardVO.title} --%>
-				<c:out value="${boardVO.title}"></c:out>
-				</p>
+                <!-- 아래와 같은 출력형태는 EL(Express Language)표시라고 합니다 -->
+                <%-- ${boardVO.title} --%>
+                <!-- 위 자바의 EL출력은 보안에 취약하기 때문에 아래처럼 처리함. -->
+                <c:out value="${boardVO.title}"></c:out>
+                </p>
 
                 <hr><!-- horizontal 수평선 태그 -->
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> content</strong>
                 <p class="text-muted">
-                ${boardVO.content}
+                	${boardVO.content}
                 </p>
 				<!-- 부트스트랩 오른쪽여백주기클래스명mr-1:(margin-right: .25rem!important;) -->
                 <hr>
                 <strong><i class="fas fa-pencil-alt mr-1"></i> 작성자</strong>
                 <p class="text-muted">
-				<c:out value="${boardVO.writer }"></c:out>
-				</p>
-
-                <hr>
-                <strong><i class="far fa-save mr-1"></i> 첨부파일</strong>
-                <p class="text-muted"><a href="#">${boardVO.save_file_names[0]}-파일다운로드</a></p>
-                
+                <c:out value="${boardVO.writer}"></c:out>
+                </p>
+                <c:if test="${boardVO.save_file_names[0] != null}">
+                	<hr>
+	                <strong><i class="far fa-save mr-1"></i> 첨부파일</strong>
+	                <p class="text-muted">
+	                <a href="#">
+	                ${boardVO.save_file_names[0]}-파일다운로드
+	                </a>
+	                </p>
+                </c:if>
               </div>
               <!-- /.card-body -->
             </div>
+          
           <!-- 버튼영역 시작 -->
           <div class="card-body">
             	<a href="/admin/board/board_list?page=${pageVO.page}" class="btn btn-primary float-right mr-1">LIST ALL</a>
-              	<button class="btn btn-danger float-right mr-1">DELETE</button>
+              	<button class="btn btn-danger float-right mr-1" id="btn_board_delete">DELETE</button>
 				<a href="/admin/board/board_update?page=${pageVO.page}&bno=${boardVO.bno}" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>              	
               	<!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그를 버튼모양 만들기(위) -->
               	<!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스명은 버튼색상을 변경하는역할 -->
@@ -121,7 +126,7 @@
 	                  </div>
 	                </div>
 	              </div> -->
-
+	              
 	          </div><!-- //.timeline -->
 	          <!-- 페이징처리 시작 -->
 	          <div class="pagination justify-content-center">
@@ -144,7 +149,7 @@
           <!-- 댓글영역 끝 -->
           </div><!-- //col-12 -->
         </div><!-- //row -->
-
+        
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -198,7 +203,7 @@ $(document).ready(function() {
 			url:'/reply/reply_write',//jsp로 가면, ReplyController 에서 지정한 url로 바꿔야 합니다.
 			dataType:'text',//ReplyController에서 받은 데이터의 형식은 text형식으로 받겠다고 명시.
 			success:function(result) {//응답이 성공하면(상태값200)위경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
-				//alert(result);
+				alert(result);//디버그용
 				//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듭니다.(아래)
 				result = [
 					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글",replyer:"admin",regdate:타임스탬프}
@@ -248,3 +253,20 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
+<!-- 게시물 삭제 버튼 클릭시 액션(아래) -->
+<form name="action_form">
+	<input type="hidden" name="bno" value="${boardVO.bno}">
+	<input type="hidden" name="page" value="${pageVO.page}">
+</form>
+<script>
+$(document).ready(function(){
+	$("#btn_board_delete").on("click",function(){
+		//alert("디버그");
+		if(confirm("정말로 삭제 하시겠습니까?")) {
+			$('form[name="action_form"]').attr("method","post");
+			$('form[name="action_form"]').attr("action","/admin/board/board_delete");
+			$('form[name="action_form"]').submit();
+		}
+	});
+});
+</script>

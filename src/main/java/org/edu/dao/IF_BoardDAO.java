@@ -11,5 +11,7 @@ public interface IF_BoardDAO {
 	public BoardVO readBoard(int bno) throws Exception;
 	public List<String> readAttach(Integer bno) throws Exception;
 	public void updateViewCount(Integer bno) throws Exception;
-	
+	public void insertBoard(BoardVO boardVO) throws Exception;
+	public void deleteBoard(Integer bno) throws Exception;
+	public void updateBoard(BoardVO boardVO) throws Exception;
 }

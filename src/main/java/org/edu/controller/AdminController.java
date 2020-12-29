@@ -32,19 +32,42 @@ public class AdminController {
 	SecurityCode securityCode;
 	
 	@Inject
-	IF_BoardService boardService; //게시판 인터페이스 주입받아 boardService오브젝트 변수를 생성.
+	IF_BoardService boardService;//게시판인터페이스를 주입받아서 boardService오브젝트 생성.
 	
 	@Inject
 	IF_MemberService memberService;//멤버인터페이스를 주입받아서 memberService오브젝트 변수를 생성.
+	
+	//GET은 URL전송방식(아무데서나 브라우저주소에 적으면 실행됨), POST는 폼전송방식(해당페이지에서만 작동가능)
+	@RequestMapping(value="/admin/board/board_delete",method=RequestMethod.POST)
+	public String board_delete(RedirectAttributes rdat,PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
+		
+		boardService.deleteBoard(bno);
+		rdat.addFlashAttribute("msg", "삭제");
+		return "redirect:/admin/board/board_list?page=" + pageVO.getPage();//삭제할 당시의 현재페이지를 가져가서 리스트로보줌
+	}
+	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.GET)
+	public String board_update(@RequestParam("bno") Integer bno, @ModelAttribute("pageVO") PageVO pageVO,Model model) throws Exception {
+		BoardVO boardVO = boardService.readBoard(bno);
+		model.addAttribute("boardVO", boardVO);
+		return "admin/board/board_update"; //파일경로
+	}
+	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.POST)
+	public String board_update(RedirectAttributes rdat, MultipartFile file, BoardVO boardVO, PageVO pageVO) throws Exception{
+		boardService.updateBoard(boardVO);
+		rdat.addFlashAttribute("msg", "수정");
+		return "redirect:/admin/board/board_view?page="+pageVO.getPage()+"&bno="+boardVO.getBno();
+	}
 	
 	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.GET)//URL경로
 	public String board_write() throws Exception {
 		return "admin/board/board_write";//파일경로
 	}
 	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.POST)
-	public String board_write(MultipartFile file, BoardVO boardVO) throws Exception {
+	public String board_write(RedirectAttributes rdat,MultipartFile file, BoardVO boardVO) throws Exception {
 		//post받은 boardVO내용을 DB서비스에 입력하면 됩니다.
 		//dB에 입력후 새로고침명령으로 게시물 테러를 당하지 않으려면, redirect로 이동처리 합니다.(아래)
+		boardService.insertBoard(boardVO);
+		rdat.addFlashAttribute("msg", "저장");
 		return "redirect:/admin/board/board_list";
 	}
 	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
@@ -64,23 +87,34 @@ public class AdminController {
 		 * boardVO.setReply_count(0);
 		 */
 		BoardVO boardVO = boardService.readBoard(bno);
+		//시큐어코딩 시작
 		String xss_data = boardVO.getContent();
 		boardVO.setContent(securityCode.unscript(xss_data));
-		
+		//시큐어코딩 끝
+		//첨부파일 리스트 값을 가져와서 세로데이터(jsp에서는 forEach문사용)를 가로데이터(jsp에서 배열사용)로 바꾸기
+		//첨부파일을 1개만 올리기 때문에 리스트형 데이터를 배열데이터로 변경
+		// 리스트형 입력값(세로) [
+		// {'save_file_name0'},
+		// {'save_file_name1'},
+		// ..
+		//]
 		List<String> files = boardService.readAttach(bno);
 		String[] save_file_names = new String[files.size()];
 		int cnt = 0;
-		for(String save_file_name:files) {
+		for(String save_file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
 			save_file_names[cnt] = save_file_name;
-			cnt = cnt+1;
+			cnt = cnt + 1;
 		}
+		//배열형출력값(가로) {'save_file_name0','save_file_name1',...}
 		boardVO.setSave_file_names(save_file_names);
-		model.addAttribute("save_file_names", files);
+		//위처럼 첨부파일을 세로베치->가로배치로 바꾸고, get/set하는 이유는 attachVO를 만들지 않아서 입니다.
+		//만약 위처럼 복잡하게 세로배치->가로배치로 바꾸는 것이 이상하면, 아래처럼처리
+		//model.addAttribute("save_file_names", files);
 		model.addAttribute("boardVO", boardVO);
 		return "admin/board/board_view";
 	}
 	@RequestMapping(value="/admin/board/board_list",method=RequestMethod.GET)
-	public String board_list(PageVO pageVO, Model model) throws Exception {
+	public String board_list(@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
 		//테스트용 더미 게시판 데이터 만들기(아래)
 		/*
 		 * BoardVO input_board = new BoardVO(); input_board.setBno(1);
@@ -100,21 +134,22 @@ public class AdminController {
 		 * = {2,"두번째 게시물 입니다.","두번째 내용 입니다.<br>줄바꿈했습니다.","user02",now(),2,0};
 		 * board_array[1] = input_board2; //-------------------------------------
 		 * List<BoardVO> board_list = Arrays.asList(board_array);//배열타입을 List타입으로 변경절차.
-		 */		
-		// selectMember마이바티스쿼리를 실행하기전에 set이 발생해야 변수값이 할당됩니다.(아래)
+		 */
+		// selectBoard마이바티스쿼리를 실행하기전에 set이 발생해야 변수값이 할당됩니다.(아래)
+		// PageVO의 queryStartNo구하는 계산식 먼저 실행되어서 변수값이 발생되어야 합니다.
 		if(pageVO.getPage() == null) {//int 일때 null체크에러가 나와서 pageVO의 page변수형 Integer로벼경.
 			pageVO.setPage(1);
 		}
 		pageVO.setPerPageNum(8);//리스트하단에 보이는 페이징번호의 개수
-		pageVO.setQueryPerPageNum(10);//쿼리에서 1페이지당 보여줄 회원수 10명으로 입력 놓았습니다.
-		//검색된 전체 회원 명수 구하기 서비스 호출
+		pageVO.setQueryPerPageNum(10);//쿼리에서 1페이지당 보여줄 게시물수 10개로 입력 놓았습니다.
+		//검색된 전체 게시물수 구하기 서비스 호출
 		int countBoard = 0;
 		countBoard = boardService.countBoard(pageVO);
-		pageVO.setTotalCount(countBoard);//x개 전체 회원의 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
+		pageVO.setTotalCount(countBoard);//11x개 전체 게시물 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
 		
 		List<BoardVO> board_list = boardService.selectBoard(pageVO);
 		model.addAttribute("board_list", board_list);
-		model.addAttribute("pageVO", pageVO);
+		//model.addAttribute("pageVO", pageVO);//@ModelAttribute 애노테이션으로 대체
 		return "admin/board/board_list";
 	}
 	
@@ -133,8 +168,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.GET)
-	public String member_update(@RequestParam("user_id")String user_id, @ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
-		//GET방식으로 업데이트 form파일 보여줌.
+	public String member_update(@RequestParam("user_id") String user_id, @ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
+		//GET방식으로 업데이트 폼파일만 보여줍니다.
 		MemberVO memberVO = memberService.readMember(user_id);
 		model.addAttribute("memberVO", memberVO);
 		return "admin/member/member_update";
@@ -151,9 +186,9 @@ public class AdminController {
 	@RequestMapping(value="/admin/member/member_delete",method=RequestMethod.POST)
 	public String member_delete(RedirectAttributes rdat, @RequestParam("user_id") String user_id) throws Exception {
 		memberService.deleteMember(user_id);
-		//Redirect로 페이지 이동시 전송값을 숨겨서 보내는 역할 클래스 RedirectAttributes 입니다.
-		rdat.addFlashAttribute("msg","삭제");
-		return "redirect:/admin/member/member_list";
+		//Redirect로 페이지 이동시 전송값을 숨겨서 보내는 역할 클래스 RedirctAttributes 입니다.
+		rdat.addFlashAttribute("msg", "삭제");
+		return "redirect:/admin/member/member_list";//?success=ok
 	}
 	//member_list.jsp에서 보낸 데이터를 수신하는 역할 @RequestParam("키이름") 리퀘스트파라미터 클래스 사용.
 	//현재컨트롤러 클래스에서 member_view.jsp로 데이터를 보내는 역할 Model 클래스 사용.
@@ -207,18 +242,18 @@ public class AdminController {
 		 * Arrays.asList메서드로 List타입으로 변경해서 jsp 보냅니다. //위에서 테이터타입연습으로 총 3가지 테이터 타입을 확인했음.
 		 * System.out.println("List타입의 오브젝트 클래스내용을 출력 " + members_list.toString());
 		 */
-		// null/10 = 에러처리(아래)
-		if(pageVO.getPage() == null) { //null체크에러가 나와서 pageVO의 변수형을 Integer로 설정
+		
+		// selectMember마이바티스쿼리를 실행하기전에 set이 발생해야 변수값이 할당됩니다.(아래)
+		if(pageVO.getPage() == null) {//int 일때 null체크에러가 나와서 pageVO의 page변수형 Integer로벼경.
 			pageVO.setPage(1);
 		}
-		pageVO.setPerPageNum(8);//리스트 하단에 보이는 페이징번호의 개수
-		pageVO.setQueryPerPageNum(10);//1페이지당 보여줄 회원수 10명으로 입력 .
-		
-		//검색된 전체회원 명수 구하기 서비스 호출
+		pageVO.setPerPageNum(8);//리스트하단에 보이는 페이징번호의 개수
+		pageVO.setQueryPerPageNum(10);//쿼리에서 1페이지당 보여줄 회원수 10명으로 입력 놓았습니다.
+		//검색된 전체 회원 명수 구하기 서비스 호출
 		int countMember = 0;
 		countMember = memberService.countMember(pageVO);
-		pageVO.setTotalCount(countMember);//전체 회원의 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
-				
+		pageVO.setTotalCount(countMember);//115전체 회원의 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
+		
 		List<MemberVO> members_list = memberService.selectMember(pageVO);
 		model.addAttribute("members", members_list);//members-2차원배열을 members_array클래스오브젝트로 변경
 		//상단의 @ModelAttribute("pageVO")는 jsp로 PageVO클래스 결과를 보내주는 역할.
