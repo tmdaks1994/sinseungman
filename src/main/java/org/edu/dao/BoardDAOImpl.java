@@ -1,6 +1,8 @@
 package org.edu.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -67,5 +69,14 @@ public class BoardDAOImpl implements IF_BoardDAO {
 		//BoardVO 개발자 선언한 클래스, 데이터클래스, 오브젝트클래스 - C언어 구조체
 		//String 자바가 선언한 클래스
 		sqlSession.update("boardMapper.updateBoard", boardVO);
+	}
+
+	@Override
+	public void insertAttach(String save_file_name, String real_file_name) throws Exception {
+		// 첨부파일 입력 mapper query
+		Map<String,Object> paraMap = new HashMap<String,Object>();
+		paraMap.put("save_file_name", save_file_name);
+		paraMap.put("real_file_name", real_file_name);
+		sqlSession.insert("boardMapper.insertAttach", paraMap);
 	}
 }
