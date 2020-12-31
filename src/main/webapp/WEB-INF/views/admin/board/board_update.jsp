@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../include/header.jsp" %>
-<script src="/resources/ckeditor/ckeditor.js"></script>
 
   <!-- 대시보드 본문 Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -50,7 +49,7 @@
                   </div>
                   <div class="form-group">
                   	<label for="content">Content</label>
-                  	<textarea rows="5" name="content" id="content" class="form-control ckeditor">${boardVO.content}</textarea>
+                  	<textarea rows="5" name="content" id="content" class="form-control"><c:out value="${boardVO.content}"/></textarea>
                   	<!-- 필수입력 값은 html5에서 지원하는 유효성 검사중 required 속성을 사용해서 빈(null)값체크(유효성검사)를 합니다. -->
                   </div>
                   <div class="form-group">
@@ -64,6 +63,15 @@
                     <input type="file" name="file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile" style="color:#999;">파일첨부</label>
                   </div>
+                  <c:if test="${boardVO.save_file_names[0] != null}">
+	                	<hr>
+		                <strong><i class="far fa-save mr-1"></i> 첨부파일</strong>
+		                <p class="text-muted">
+		                <a href="/download?save_file_name=${boardVO.save_file_names[0]}&real_file_name=${boardVO.real_file_names[0]}">
+		                ${boardVO.real_file_names[0]}-파일다운로드
+		                </a>
+		                </p>
+	              </c:if>
                 </div>
                 <!-- /.card-body -->
               
@@ -71,14 +79,13 @@
           
           <!-- 버튼영역 시작 -->
             <div class="card-body">
-            	<a href="/admin/board/board_list?page=${pageVO.page}" class="btn btn-primary float-right mr-1">LIST ALL</a>
-              	<button type="submit" class="btn btn-danger float-right mr-1">SUBMIT</button>              	
+            	<a href="/admin/board/board_view?page=${pageVO.page}&bno=${boardVO.bno}" class="btn btn-primary float-right mr-1">목록 화면</a>
+              	<button type="submit" class="btn btn-danger float-right mr-1">수정</button>              	
               	<!-- a태그는 링크이동은 되지만, post값을 전송하지는 못합니다. 그래서, button태그를 사용. -->
             </div>
           <!-- 버튼영역 끝 -->
           <input type="hidden" name="bno" value="${boardVO.bno}">
           <input type="hidden" name="page" value="${pageVO.page}">
-          
           </form>
           <!-- 폼내부에 버튼이 있어야지만, 전송버튼이 작동 됩니다. -->
           
@@ -91,10 +98,9 @@
   </div>
   <!-- /.content-wrapper -->
 
-
 <%@ include file="../include/footer.jsp" %>
-  
-  <!-- 첨부파일 부트스트랩 디자인 JS -->
+
+<!-- 첨부파일 부트스트랩 디자인 JS -->
 <script src="/resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <!-- 첨부파일 선택한 내용 출력 실행 -->
 <script>
@@ -112,21 +118,20 @@ $(document).ready(function(){
 	$('#content').summernote({
 		height:150,
 		lang:"ko-KR",
-		placeholder:'내용을 입력해 주세요',
-	    toolbar: [
-		    ['fontname', ['fontname']],
-		    ['fontsize', ['fontsize']],
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    ['color', ['forecolor','color']],
-		    ['table', ['table']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']],
-		    ['insert',['link','video']],
-		    ['view', ['fullscreen', 'help']]
-		  ],
+		placeholder:'글 내용을 입력해 주세요',
+		toolbar: [
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['link','video']],//'picture',
+				    ['view', ['fullscreen', 'help']]
+				],
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	});
 });//textarea 중 content아이디영역을 섬머노트에디터로 변경처리 함수실행
 </script>
-

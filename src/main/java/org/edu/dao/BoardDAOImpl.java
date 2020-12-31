@@ -89,6 +89,17 @@ public class BoardDAOImpl implements IF_BoardDAO {
 	@Override
 	public void deleteAttachAll(Integer bno) throws Exception {
 		// 해당 게시물의 첨부파일 모두 삭제
+		
 		sqlSession.delete("boardMapper.deleteAttachAll",bno);
+	}
+
+	@Override
+	public void updateAttach(String save_file_name, String real_file_name, Integer bno) throws Exception {
+		// 해당 게시물에 첨부파일 업데이트 mapperquery 연결
+		Map<String,Object> paraMap = new HashMap<String,Object>();
+		paraMap.put("save_file_name", save_file_name);
+		paraMap.put("real_file_name", real_file_name);
+		paraMap.put("bno", bno);
+		sqlSession.insert("boardMapper.updateAttach", paraMap);
 	}
 }

@@ -20,5 +20,6 @@ public interface IF_BoardDAO {
 	public void insertAttach(String save_file_name, String real_file_name) throws Exception;
 	public void deleteAttach(String save_file_name) throws Exception;
 	public void deleteAttachAll(Integer bno) throws Exception;
+	public void updateAttach(String save_file_name,String real_file_name, Integer bno) throws Exception;
 	
 }

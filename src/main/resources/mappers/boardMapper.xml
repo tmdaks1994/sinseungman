@@ -18,10 +18,17 @@
 		</if>
 	</if>
 </sql>
+<!-- 해당 게시물의 첨부파일 업데이트 -->
+<insert id="updateAttach">
+insert into tbl_attach (save_file_name,real_file_name,bno)
+values (#{save_file_name}, #{real_file_name}, #{bno})
+</insert>
+
 <!-- 해당 게시물의 첨부파일 1개만 지우기 -->
 <delete id="deleteAttach">
 delete from tbl_attach where save_file_name = #{save_file_name}
 </delete>
+
 <!-- 해당게시물의 첨부파일 모두 지우기 외래키(foreign)사용-->
 <delete id="deleteAttachAll">
 delete from tbl_attach where bno = #{bno}
@@ -39,13 +46,16 @@ values (#{save_file_name}, #{real_file_name}, (select bno from tbl_board order b
 	update_date = now()
 where bno = #{bno}
 </update>
+
 <delete id="deleteBoard">
 delete from tbl_board where bno = #{bno}
 </delete>
+
 <insert id="insertBoard">
 insert into tbl_board (title,content,writer,reg_date) 
 values(#{title},#{content},#{writer},now())
 </insert>
+
 <select id="readAttach" resultType="java.util.HashMap">
 select save_file_name,real_file_name from tbl_attach where bno = #{bno} order by reg_date desc
 </select>
