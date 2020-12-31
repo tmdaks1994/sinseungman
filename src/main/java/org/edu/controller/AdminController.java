@@ -1,5 +1,6 @@
 package org.edu.controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.edu.util.SecurityCode;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,20 +46,30 @@ public class AdminController {
 	//GET은 URL전송방식(아무데서나 브라우저주소에 적으면 실행됨), POST는 폼전송방식(해당페이지에서만 작동가능)
 	@RequestMapping(value="/admin/board/board_delete",method=RequestMethod.POST)
 	public String board_delete(RedirectAttributes rdat,PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
-		
+		//기존 등록된 첨부파일 폴더에서 삭제할 UUID파일명 구하기 
+		List<HashMap<String,Object>> delFiles = boardService.readAttach(bno);
 		boardService.deleteBoard(bno);
+		//첨부파일 삭제 : DB부터 먼저 삭제 후 첨부파일 삭제
+		for(HashMap<String,Object> file_name:delFiles) {
+			File target = new File(commonController.getUploadPath(), (String)file_name.get("save_file_name"));
+			if(target.exists()) {
+				target.delete();//실제 지워짐.
+			}
+		}
 		rdat.addFlashAttribute("msg", "삭제");
 		return "redirect:/admin/board/board_list?page=" + pageVO.getPage();//삭제할 당시의 현재페이지를 가져가서 리스트로보줌
 	}
+	
 	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.GET)
-	public String board_update(@RequestParam("bno") Integer bno, @ModelAttribute("pageVO") PageVO pageVO,Model model) throws Exception {
+	public String board_update(@RequestParam("bno") Integer bno,@ModelAttribute("pageVO") PageVO pageVO,Model model) throws Exception {
 		BoardVO boardVO = boardService.readBoard(bno);
 		model.addAttribute("boardVO", boardVO);
-		return "admin/board/board_update"; //파일경로
+		return "admin/board/board_update";//파일경로
 	}
 	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.POST)
-	public String board_update(RedirectAttributes rdat, MultipartFile file, BoardVO boardVO, PageVO pageVO) throws Exception{
+	public String board_update(RedirectAttributes rdat,MultipartFile file, BoardVO boardVO, PageVO pageVO) throws Exception {
 		boardService.updateBoard(boardVO);
+		//첨부파일 수정 미처리2 - 추가예정:수정할때 순서, 부모부터 수정 후 자식이 수정됩니다.
 		rdat.addFlashAttribute("msg", "수정");
 		return "redirect:/admin/board/board_view?page="+pageVO.getPage()+"&bno="+boardVO.getBno();
 	}
@@ -70,6 +82,7 @@ public class AdminController {
 	public String board_write(RedirectAttributes rdat,MultipartFile file, BoardVO boardVO) throws Exception {
 		//post받은 boardVO내용을 DB서비스에 입력하면 됩니다.
 		//dB에 입력후 새로고침명령으로 게시물 테러를 당하지 않으려면, redirect로 이동처리 합니다.(아래)
+		//첨부파일이 있으면, 첨부파일 업로드처리 후 게시판DB저장+첨부파일DB저장
 		if(file.getOriginalFilename() != "") {//첨부파일명이 있으면
 			String[] save_file_names = commonController.fileUpload(file);//폴더에 업로드저장완료
 			boardVO.setSave_file_names(save_file_names);//UUID로 생성된 유니크한 파일명
@@ -77,9 +90,11 @@ public class AdminController {
 			boardVO.setReal_file_names(real_file_names);
 		}
 		boardService.insertBoard(boardVO);
+		
 		rdat.addFlashAttribute("msg", "저장");
 		return "redirect:/admin/board/board_list";
 	}
+	
 	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
 	public String board_view(@ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno, Model model) throws Exception {
 		//jsp로 보낼 더미 데이터 boardVO에 담아서 보낸다.
@@ -108,21 +123,25 @@ public class AdminController {
 		// {'save_file_name1'},
 		// ..
 		//]
-		List<String> files = boardService.readAttach(bno);
+		List<HashMap<String, Object>> files = boardService.readAttach(bno);
 		String[] save_file_names = new String[files.size()];
+		String[] real_file_names = new String[files.size()];
 		int cnt = 0;
-		for(String save_file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
-			save_file_names[cnt] = save_file_name;
+		for(HashMap<String, Object> file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
+			save_file_names[cnt] = (String) file_name.get("save_file_name");//형변환 cast
+			real_file_names[cnt] = (String) file_name.get("real_file_name");
 			cnt = cnt + 1;
 		}
 		//배열형출력값(가로) {'save_file_name0','save_file_name1',...}
 		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
 		//위처럼 첨부파일을 세로베치->가로배치로 바꾸고, get/set하는 이유는 attachVO를 만들지 않아서 입니다.
 		//만약 위처럼 복잡하게 세로배치->가로배치로 바꾸는 것이 이상하면, 아래처럼처리
 		//model.addAttribute("save_file_names", files);
 		model.addAttribute("boardVO", boardVO);
 		return "admin/board/board_view";
 	}
+	
 	@RequestMapping(value="/admin/board/board_list",method=RequestMethod.GET)
 	public String board_list(@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
 		//테스트용 더미 게시판 데이터 만들기(아래)
