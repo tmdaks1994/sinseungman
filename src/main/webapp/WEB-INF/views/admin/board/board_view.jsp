@@ -56,19 +56,20 @@
                 <p class="text-muted">
                 <c:out value="${boardVO.writer}"></c:out>
                 </p>
-                <c:if test="${boardVO.save_file_names[0] != null}">
+                <c:forEach var="index" begin="0" end="1">
+                	<c:if test="${boardVO.save_file_names[index] != null}">
                 	<hr>
-	                <strong><i class="far fa-save mr-1"></i> 첨부파일</strong>
+	                <strong><i class="far fa-save mr-1"></i> 첨부파일${index}</strong>
 	                <p class="text-muted">
-	                <a href="/download?save_file_name=${boardVO.save_file_names[0]}&real_file_name=${boardVO.real_file_names[0]}">
-	                ${boardVO.real_file_names[0]}-파일다운로드
+	                <a href="/download?save_file_name=${boardVO.save_file_names[index]}&real_file_name=${boardVO.real_file_names[index]}">
+	                ${boardVO.real_file_names[index]}-파일다운로드${index} 
 	                </a>
-	                <c:set var="fileNameArray" value="${fn:split(boardVO.save_file_names[0],'.' )}"></c:set>
+	                <c:set var="fileNameArray" value="${fn:split(boardVO.save_file_names[index],'.' )}"></c:set>
 	                <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)-1]}"></c:set>
 	                <!-- 첨부파일이 이미지인지 아닌지 비교해서 img태그를 사용할지 결정 -->
 	                <c:choose>
 	                	<c:when test="${fn:containsIgnoreCase(checkImgArray,extName)}">
-	                		<img style="width:100%;" src="/download?save_file_name=${boardVO.save_file_names[0]}&real_file_name=${boardVO.real_file_names[0]}">
+	                		<img style="width:100%;" src="/download?save_file_name=${boardVO.save_file_names[index]}&real_file_name=${boardVO.real_file_names[index]}">
 	                	</c:when>
 	                	<c:otherwise>
 	                		<!-- 사용자홈페이지 메인 최근 게시물 미리보기 이미지가 없을때 사용 예정. -->
@@ -76,7 +77,9 @@
 	                </c:choose>
 	                <!-- true면 이미지 파일 -->
 	                </p>
-                </c:if>
+                	</c:if>
+                </c:forEach>
+                
               </div>
               <!-- /.card-body -->
             </div>
