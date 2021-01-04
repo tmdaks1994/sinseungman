@@ -124,7 +124,7 @@
 	          <div class="timeline">
 	          	  <!-- .time-label의 before 위치 -->
 		          <div class="time-label">
-	                <span class="bg-red">Reply List[1]&nbsp;&nbsp;</span>
+	                <span class="bg-red" id="btn_reply_list" style="cursor:pointer;">Reply List[1]&nbsp;&nbsp;</span>
 	              </div>
 	              <!-- .time-label의 after 위치 -->
 		          <!-- <div>
@@ -196,6 +196,27 @@ jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가�
  </div>
 </div>
 {{/each}}
+</script>
+<!-- 댓글 리스트 버튼 클릭시 Ajax RestAPI컨트롤러 호출해서 댓글목록 Json데이터로 -->
+<script>
+$(document).ready(function(){
+	$("#btn_reply_list").on("click",function(){
+		//alert("메롱");
+		//$.getJSON("/reply/reply_list/"101/1,);
+		/*$.ajax({
+			type:"get",
+			url:"/reply_list",
+			dataType:"text,
+			success:function(result){//result에는 댓글 목록이 있도록 json데이터 받음.
+				//result 데이터를 바인딩후 출력.
+				
+			},
+			error.function(result){
+				alert("RestAPI 서버 오류");
+			}*/
+		});
+	});
+});
 </script>
 
 <!-- 화면을 재구현Representation하는 함수(아래) -->
