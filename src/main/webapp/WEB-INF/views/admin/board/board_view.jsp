@@ -187,7 +187,7 @@ jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가�
  <i class="fas fa-envelope bg-blue"></i>
  <div class="timeline-item">
    <h3 class="timeline-header">{{replyer}}</h3>
-   <div class="timeline-body">{{replytext}}</div>
+   <div class="timeline-body">{{reply_text}}</div>
    <div class="timeline-footer">
 	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#replyModal">
   		수정
@@ -196,27 +196,6 @@ jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가�
  </div>
 </div>
 {{/each}}
-</script>
-<!-- 댓글 리스트 버튼 클릭시 Ajax RestAPI컨트롤러 호출해서 댓글목록 Json데이터로 -->
-<script>
-$(document).ready(function(){
-	$("#btn_reply_list").on("click",function(){
-		//alert("메롱");
-		//$.getJSON("/reply/reply_list/"101/1,);
-		/*$.ajax({
-			type:"get",
-			url:"/reply_list",
-			dataType:"text,
-			success:function(result){//result에는 댓글 목록이 있도록 json데이터 받음.
-				//result 데이터를 바인딩후 출력.
-				
-			},
-			error.function(result){
-				alert("RestAPI 서버 오류");
-			}*/
-		});
-	});
-});
 </script>
 
 <!-- 화면을 재구현Representation하는 함수(아래) -->
@@ -228,7 +207,35 @@ var printReplyList = function(data, target, templateObject) {
 	target.after(html);//target은 .time-label 클래스영역을 가리킵니다.
 };
 </script>
-<!-- 댓글 등록 버튼 액션 처리(아래) -->
+
+<!-- 댓글 리스트 버튼 클릭시 Ajax RestAPI컨트롤러 호출해서 댓글목록 Json데이터로 -->
+<script>
+$(document).ready(function(){
+	$("#btn_reply_list").on("click", function(){
+		//alert('디버그');
+		$.ajax({
+			type:"post",
+			url:"/reply/reply_list/${boardVO.bno}",//게시물번호에 대한 댓글목록을 가져오는 URL
+			dataType:"json", //받을때 json데이터를 받음.
+			success:function(result) {//result에는 댓글 목록을 json데이터로 받음.
+				//alert("디버그" + result);
+				if(typeof result=="undefined" || result=="" || result==null){
+					alert("조회된 값이 없습니다.");
+				}else{
+					//var jsonData = JSON.parse(result);//dataType 텍스트일때 실행
+					//위에서 정의한 printReplyList(Json데이터, 출력위치타켓, 빵틀);데이와-빵틀 바인딩
+					printReplyList(result.replyList, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
+				}
+			},
+			error:function(result) {
+				alert("RestApi서버에러.");
+			}
+		});
+	});
+});
+</script>
+
+<!-- 댓글 등록 버튼 액션 처리 -->
 <script>
 $(document).ready(function() {
 	$("#insertReplyBtn").on("click", function() {//댓글등록버튼을 클릭했을 때 구현내용(아래)
@@ -244,17 +251,17 @@ $(document).ready(function() {
 				//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듭니다.(아래)
 				result = [
 					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글",replyer:"admin",regdate:타임스탬프}
-					{rno:1,bno:15,replytext:"첫번째 댓글",replyer:"admin",regdate:1601234512345},//첫번째 댓글 데이터
-					{rno:2,bnt:15,replytext:"두번째 댓글",replyer:"admin",regdate:1601234512345}//두번째 댓글 데이터
+					{rno:1,bno:15,reply_text:"첫번째 댓글",replyer:"admin",reg_date:1601234512345},//첫번째 댓글 데이터
+					{rno:2,bno:15,reply_text:"두번째 댓글",replyer:"admin",reg_date:1601234512345}//두번째 댓글 데이터
 				];//위 URL이 공공데이터생각하면,위 데이터를 화면에 구현하면, 빅데이터의 시각화로 불리게 됩니다.
 				//printReplyList(빅데이터, 출력할 타켓위치, 빅데이터를 가지고 바인딩된-묶인 템플릿화면);
 				printReplyList(result, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
 			} 
 		});
-	} );
+	});
 });
 </script>
-<!-- 댓글리스트에서 수정 버튼을 클릭했을때, 팝업창이 뜨는데, 그 팝업창에 내용을 동적으로 변경시켜주는 구현(아래)  -->
+<!-- 댓글리스트에서 수정 버튼을 클릭했을때, 팝업창이 뜨는데, 그 팝업창에 내용을 동적으로 변경시켜주는 구현  -->
 <script>
 $(document).ready(function() {
 	$(".timeline").on("click", ".template-div", function() {//.template-div 댓글 리스트영역
@@ -290,7 +297,7 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
-<!-- 게시물 삭제 버튼 클릭시 액션(아래) -->
+<!-- 게시물 삭제 버튼 클릭시 액션 -->
 <form name="action_form">
 	<input type="hidden" name="bno" value="${boardVO.bno}">
 	<input type="hidden" name="page" value="${pageVO.page}">
