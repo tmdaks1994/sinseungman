@@ -79,6 +79,7 @@
                       <!--${boardVO.bno} 대신에 보기편한 넘버링으로 변환-->
                       <!-- 전체게시물-(현재페이지*한페이지에 보여주는 개수)+한페이지에 보여주는 개수-현재인덱스 값-->
                       ${pageVO.totalCount-(pageVO.page*pageVO.queryPerPageNum)+pageVO.queryPerPageNum-status.index}
+					  [${boardVO.bno}]
 					  </td>
                       <!-- 아래 a링크값은 리스트가 늘어날 수록 동적으로 bno값이 변하게 됩니다. 개발자가 jsp처리 -->
                       <td><a href="/admin/board/board_view?page=${pageVO.page }&bno=${boardVO.bno}">

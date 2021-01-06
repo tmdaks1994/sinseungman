@@ -124,7 +124,7 @@
 	          <div class="timeline">
 	          	  <!-- .time-label의 before 위치 -->
 		          <div class="time-label">
-	                <span class="bg-red" id="btn_reply_list" style="cursor:pointer;">Reply List[1]&nbsp;&nbsp;</span>
+	                <span class="bg-red" id="btn_reply_list" style="cursor:pointer;">Reply List[${boardVO.reply_count}]&nbsp;&nbsp;</span>
 	              </div>
 	              <!-- .time-label의 after 위치 -->
 		          <!-- <div>
@@ -146,19 +146,21 @@
 	          </div><!-- //.timeline -->
 	          <!-- 페이징처리 시작 -->
 	          <div class="pagination justify-content-center">
-	            	<ul class="pagination">
+	            	<ul class="pagination pageVO">
+	            	 <!-- 
 	            	 <li class="paginate_button page-item previous disabled" id="example2_previous">
 	            	 <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
 	            	 </li>
-	            	 <!-- 위 이전게시물링크 -->
+	            	 위 이전게시물링크
 	            	 <li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
 	            	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
 	            	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-	            	 <!-- 아래 다음게시물링크 -->
+	            	 아래 다음게시물링크
 	            	 <li class="paginate_button page-item next" id="example2_next">
 	            	 <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
 	            	 </li>
-	            	 </ul>
+	            	 -->
+	            </ul>
 	          </div>
 		  	  <!-- 페이징처리 끝 -->     
 	      </div>
@@ -173,6 +175,7 @@
   <!-- /.content-wrapper -->
 
 <%@ include file="../include/footer.jsp" %>
+<input type = "hidden" id ="reply_page" value="1"><!-- #btn_reply_list클릭할때 가져올 페이지값 -->
 
 <%-- 자바스트립트용 #template 엘리먼트 제작(아래) jstl 향상된 for문과 같은 역할 
 jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가져와서 사용한 것처럼
@@ -198,6 +201,46 @@ jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가�
 {{/each}}
 </script>
 
+
+<!-- pageVO를 파싱하는 함수 -->
+<script>
+var printPageVO = function(pageVO, target) {
+	var paging = "";//출력변수 (이전링크 + 페이지번호 + 다음링크에 대한 디자인이 저장되는 변수)
+	//이전댓글
+	if(pageVO.prev){
+		paging = paging +
+		'<li class="paginate_button page-item previous" id="example2_previous"><a href="'+(pageVO.startPage-1)+'" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>';
+	}
+	//paveVO를  target영역에 페이징 번호 파싱 
+	for(var cnt=pageVO.startPage;cnt<=pageVO.endPage;cnt++){
+		var active = (cnt==pageVO.page)?"active":"";
+		paging = paging + 
+		'<li class="paginate_button page-item '+active+'"><a href="'+cnt+'" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">'+cnt+'</a></li>';
+		//자바스크립트에서 + '변수 '+문자의 결합
+	}
+	//이후 댓글
+	if(pageVO.next){
+		paging = paging +
+		'<li class="paginate_button page-item next" id="example2_next"><a href="'+(pageVO.endPage+1)+'" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>';
+	}
+	target.html(paging);
+}
+</script>
+
+<script>
+$(document).ready(function(){
+	/* 위 댓글 페이징에서 링크 태그의 페이지 이동을 방지하고, btn_reply_list버튼을 클릭해서
+	링크한 페이지 값이로 대체해서 실행하는 역할하는 코드*/
+	$(".pageVO").on("click","li a", function(event){
+		event.preventDefault();//a태그의 기본기능인 이동기능을 막는 설정.
+		var page = $(this).attr("href");//현재 클릭한 페이지 값을 저장.
+		//alert(page);
+		$("#reply_page").val(page);
+		$("#btn_reply_list").click(); //페이징번호에서 해당되는 번호를 클릭했을때, btn_reply_list버튼을 클릭
+	});
+});
+</script>
+
 <!-- 화면을 재구현Representation하는 함수(아래) -->
 <script>
 var printReplyList = function(data, target, templateObject) {
@@ -207,15 +250,16 @@ var printReplyList = function(data, target, templateObject) {
 	target.after(html);//target은 .time-label 클래스영역을 가리킵니다.
 };
 </script>
-
 <!-- 댓글 리스트 버튼 클릭시 Ajax RestAPI컨트롤러 호출해서 댓글목록 Json데이터로 -->
 <script>
 $(document).ready(function(){
 	$("#btn_reply_list").on("click", function(){
 		//alert('디버그');
+		var page = $("#reply_page").val();
+		//alert('선택한 페이지 값은' + page);
 		$.ajax({
 			type:"post",
-			url:"/reply/reply_list/${boardVO.bno}",//게시물번호에 대한 댓글목록을 가져오는 URL
+			url:"/reply/reply_list/${boardVO.bno}/"+page,//게시물번호에 대한 댓글목록을 가져오는 URL
 			dataType:"json", //받을때 json데이터를 받음.
 			success:function(result) {//result에는 댓글 목록을 json데이터로 받음.
 				//alert("디버그" + result);
@@ -225,6 +269,7 @@ $(document).ready(function(){
 					//var jsonData = JSON.parse(result);//dataType 텍스트일때 실행
 					//위에서 정의한 printReplyList(Json데이터, 출력위치타켓, 빵틀);데이와-빵틀 바인딩
 					printReplyList(result.replyList, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
+					printPageVO(result.pageVO, $(".pageVO")); 
 				}
 			},
 			error:function(result) {
