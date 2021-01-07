@@ -55,4 +55,10 @@ public class ReplyDAOImpl implements IF_ReplyDAO{
 		// mapper query 연결
 		return sqlSession.selectOne("replyMapper.selectReplyCount",bno);
 	}
+
+	@Override
+	public void deleteReplyAll(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("replyMapper.deleteReplyAll",bno);
+	}
 }
