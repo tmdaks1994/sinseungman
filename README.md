@@ -27,7 +27,21 @@ Json데이터 사용 pom.xml 의존성 추가.
 사용자단 CRUD 구현.
 오라클로 마이그레이션 작업.
 이후 유효성검사, 파스타클라우드, 네이버아이디 로그인(네이버에서 제공Rest-API백엔드단) 사용 등등. pom.xml 의존성 추가.
-
+####20210107(목)
+prepend, append, after J쿼리 기능.
+어제 작업한 댓글 리스트 btn_reply_list 버튼id에 부트스트랩(J쿼리기반의 프레임워크)의 토글기능을 넣어서
+하단 댓글리스트(페이징포함)를 나타나고, 숨기는 기능을 넣게되겠습니다.
+위 작업: 1. 액션버튼부분 : data-toggle="collapse" data-target="#div_reply"
+대상 타켓 부분
+토글영역
+댓글 jsp에서 Ajax,jQuery사용해서 CRUD처리 마무리.
+입사지원시 코딩테스트 할때 아래처럼 기초이론을 구현해보라는 요구사항 때문에 정리(아래)
+Ps.싱글톤이 사용되는 이유참조: https://shxrecord.tistory.com/132
+Ps.싱글톤 빈(스프링)에 대해서(1개의 빈은 1개의 빈객체만 생성해서 사용하겠다명시)
+https://m.blog.naver.com/PostView.nhn?blogId=sksk3479&logNo=221175889439&proxyReferer=https:%2F%2Fwww.google.com%2F
+Ps.싱글톤 클래스(자바)에 대해서(1개의 클래스는 1개의 인스턴스만 생성해서 사용하겠다명시)
+우리가 사용한 경우: 달력 인스턴스 생성. Calendar.getInstance() 참조정보(아래)
+https://m.blog.naver.com/PostView.nhn?blogId=heartflow89&logNo=221001179016&proxyReferer=https:%2F%2Fwww.google.com%2F
 ####20201229(화)
 CK에디터 사용을 하려다가, 이클립스 내장브라우저에서 작동하지 않아서 섬머노트 에디터로 변경처리.
 input type="file" name="file" 바로 DB테이블에 저장할 수 없습니다.

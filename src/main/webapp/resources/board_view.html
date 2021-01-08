@@ -203,7 +203,7 @@
 	          <div class="card-header">
 	            <h5 class="card-title">Add New Reply</h5>
 	          </div>
-	          <form action="#" name="reply_form" method="post">
+	          <form action="board_view.html" name="reply_form" method="post">
 	          <div class="card-body">
 	          	<div class="form-group">
                    <label for="writer">Writer</label>
@@ -220,12 +220,12 @@
 	          </div>
 	          </form>
 	          <div class="timeline">
-	          <!-- .time-label의 before 위치 -->
+	          	  <!-- .time-label의 before 위치 -->
 		          <div class="time-label">
 	                <span class="bg-red">Reply List[1]&nbsp;&nbsp;</span>
 	              </div>
-	              <!-- .time-label after 위치 -->
-		         <!--  <div>
+	              <!-- .time-label의 after 위치 -->
+		          <!-- <div>
 	                <i class="fas fa-envelope bg-blue"></i>
 	                <div class="timeline-item">
 	                  <h3 class="timeline-header">작성자</h3>
@@ -240,7 +240,8 @@
 	                  </div>
 	                </div>
 	              </div> -->
-	             </div><!-- //.timeline -->
+	              
+	          </div><!-- //.timeline -->
 	          <!-- 페이징처리 시작 -->
 	          <div class="pagination justify-content-center">
 	            	<ul class="pagination">
@@ -322,11 +323,13 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/resources/dist/js/pages/dashboard.js"></script>
 
-<!-- 자바스크립트용 #template 엘리먼트 제작(아래) jstl 향상된 for문과 같은 역할
- jstl을 사용하려면, jsp에서 <% taglib uri=...처럼 외부 core를 가져와서 사용한 것처럼
-자바스크립트에서도 외부 core를 가져와야한다. -->
+<!-- 자바스트립트용 #template 엘리먼트 제작(아래) jstl 향상된 for문과 같은 역할 
+jstl을 사용하려면, jsp에서 <%@ taglib uri=... 처럼 외부 core를 가져와서 사용한 것처럼
+자바스크립트에서도 외부 core를 가져와야 합니다.(아래)
+-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<!-- 댓글템플릿(빵틀) 만들기(아래) -->
+<!-- 댓글리스트 템플릿(빵틀) 만들기(아래) -->
+<!-- jsp <c:forEach items="${members}" var="member"> 같은 역할 {{#each .}} -->
 <script id="template" type="text/x-handlebars-template">
 {{#each .}}
 <div class="template-div" data-rno="{{rno}}">
@@ -369,7 +372,7 @@ $(document).ready(function() {
 				result = [
 					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글",replyer:"admin",regdate:타임스탬프}
 					{rno:1,bno:15,replytext:"첫번째 댓글",replyer:"admin",regdate:1601234512345},//첫번째 댓글 데이터
-					{rno:2,bnt:15,replytext:"두번째 댓글",replyer:"user02",regdate:1601234512345}//두번째 댓글 데이터
+					{rno:2,bnt:15,replytext:"두번째 댓글",replyer:"admin",regdate:1601234512345}//두번째 댓글 데이터
 				];//위 URL이 공공데이터생각하면,위 데이터를 화면에 구현하면, 빅데이터의 시각화로 불리게 됩니다.
 				//printReplyList(빅데이터, 출력할 타켓위치, 빅데이터를 가지고 바인딩된-묶인 템플릿화면);
 				printReplyList(result, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
@@ -378,16 +381,17 @@ $(document).ready(function() {
 	} );
 });
 </script>
-<!-- 댓글리스트 수정 버튼 이벤트 처리 팝업창에 내용을 동적으로 변경시키기 -->
+<!-- 댓글리스트에서 수정 버튼을 클릭했을때, 팝업창이 뜨는데, 그 팝업창에 내용을 동적으로 변경시켜주는 구현(아래)  -->
 <script>
-$(document).ready(function(){
-	$(".timeline").on("click", ".template-div", function() {
-		//$(this); //클릭한 댓글에 따라서 this는 1번째 댓글일 수도 있고, 2번째 댓글일 수도 있다.
+$(document).ready(function() {
+	$(".timeline").on("click", ".template-div", function() {//.template-div 댓글 리스트영역
+		//$(this);클릭한 댓글에 따라서 this는 첫번째 댓글일 수 도 있고, 두번째 댓글일 수도 있습니다.
 		$("#rno").val($(this).attr("data-rno"));
 		$(".modal-title").html($(this).find(".timeline-header").text());
 		$("#replytext").val($(this).find(".timeline-body").text());
-		//alert("디버그"+ $(this).find(".timeline-body").text());
-		//선택한 댓글의 time-line-body영역의 text문자를 #replytext영역에 값으로 입력.
+		//alert("디버그" + $(this).find(".timeline-body").text());
+		//마우스클릭으로 선택한 댓글의 .timeline-body영역의 text문자를 
+		//모달창의 #replaytext영역에 값으로 입력하겠다.
 	});
 });
 </script>
@@ -396,13 +400,13 @@ $(document).ready(function(){
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">작성자</h5><!-- 작성자는 동적으로 값이 바뀐다. -->
+        <h5 class="modal-title" id="exampleModalLabel">작성자</h5><!-- 작성자는 동적으로 값이 바뀝니다. -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      	<input type="hidden" name="rno" id="rno" value=""><!-- timeline클릭에 액션으로 -->
+      	<input type="hidden" name="rno" id="rno" value=""><!-- 상단 $(".timeline").on("click" 액션으로 value값이 채워집니다. -->
         <input type="text" class="form-control" name="replytext" id="replytext" placeholder="내용을 입력해 주세요.">
       </div>
       <div class="modal-footer">
