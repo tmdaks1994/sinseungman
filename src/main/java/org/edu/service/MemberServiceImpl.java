@@ -1,5 +1,7 @@
 package org.edu.service;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,4 +58,19 @@ public class MemberServiceImpl implements IF_MemberService {
 		memberDAO.insertMember(memberVO);
 	}
 
+	@Override
+	public void herokuJobMethod() throws Exception {
+		// 월~금 오전8시부터 오후11시
+		String urlStr = "http://sinseungman.herokuapp.com";
+		URL url = new URL(urlStr);
+		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+		urlConnection.setUseCaches(false); //무조건 접속
+		urlConnection.setReadTimeout(10000);//접속대기시간을 10초
+		//개발자 확인 코드
+		if(urlConnection !=null && urlConnection.getResponseCode()==HttpURLConnection.HTTP_OK) {
+			System.out.println("활성화 OK");
+		}else {
+			System.out.println("비활성화 상태");
+		}
+	}
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.edu.dao.IF_BoardDAO;
 import org.edu.dao.IF_ReplyDAO;
+import org.edu.vo.AttachVO;
 import org.edu.vo.BoardVO;
 import org.edu.vo.PageVO;
 import org.springframework.stereotype.Service;
@@ -40,9 +41,15 @@ public class BoardServiceImpl implements IF_BoardService{
 	}
 
 	@Override
-	public List<HashMap<String,Object>> readAttach(Integer bno) throws Exception {
+	public List<AttachVO> readAttach(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDAO.readAttach(bno);
+	}
+	
+	@Override
+	public List<HashMap<String,Object>> readAttach_noUse(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.readAttach_noUse(bno);
 	}
 	
 	@Transactional
