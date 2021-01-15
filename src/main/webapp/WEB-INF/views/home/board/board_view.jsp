@@ -34,7 +34,7 @@
 				<li class="bbs_date">조회수 : <span>${boardVO.view_count}</span></li>
 				<li class="bbs_content">
 					<div class="editer_content">
-					    ${boadVO.content}
+					    ${boardVO.content}
                     </div>
 				</li>
 				<li class="bbs_title" style="height:inherit;">
@@ -64,7 +64,11 @@
 				</li>
 			</ul>
 			<p class="btn_line txt_right">
-				<a href="/home/board/board_list" class="btn_bbs">글 목록</a>
+				<a href="/home/board/board_list?page=${pageVO.page}" class="btn_bbs">글 목록</a>
+				<a href="/home/board/board_update?bno=${boardVO.bno}&page=${pageVO.page}" class="btn_bbs">
+				수정
+				</a>
+				<button class="btn_baseColor btn_smallColor">삭제</button>
 			</p>
 		</div>
 		<!-- //메인본문영역 -->

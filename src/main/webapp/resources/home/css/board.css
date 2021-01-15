@@ -1,7 +1,9 @@
 @charset "UTF-8";
 /* 공통영역*/
 .bbsListTbl a:hover, .pagination a:hover, .bbs_title a:hover {
-	color:#000 !important;}
+	color:#000 !important;
+}
+
 /* 메인상단 위치표시영역 */
 .location_area {
 	height: 260px;
@@ -361,6 +363,7 @@ input:-ms-input-placeholder {
 	border-bottom: 1px solid #ccc;
 	text-align: left;
 }
+
 .near_list li h4 {
 	float: left;
 	width: 100px;
@@ -374,3 +377,17 @@ input:-ms-input-placeholder {
 /* //태블릿+PC용 게시판뷰 */
 }
 /* //게시판 글보기 영역 */
+	/*기본CSS:기본은 모바일*/
+.btn_smallColor {
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	width: 100%;
+	margin-bottom: 5px;
+	margin-top:0px;
+	font-weight:normal;
+}
+/*미디어쿼리:테블릿 기기 이상에서 적용  css*/
+@media all and (min-width:801px){
+	.btn_smallColor{width:70px;margin-top:10px;}
+}
