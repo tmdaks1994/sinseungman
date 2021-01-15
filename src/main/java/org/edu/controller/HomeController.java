@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 앱을 위한 홈페이지 요청(request)을 처리한다.
@@ -72,18 +74,43 @@ public class HomeController {
 			model.addAttribute("checkImgArray", commonController.getCheckImgArray());
 			return "home/board/board_view";
 		}
-	//사용자 홈페이지 게시판 작성 매핑
-		@RequestMapping(value="/home/board/board_write",method=RequestMethod.GET)
-		public String board_write()throws Exception {
-			return "home/board/board_write";
+		
+		@RequestMapping(value="/home/board/board_update",method=RequestMethod.GET)
+		public String board_update(Model model, @ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
+			BoardVO boardVO = boardService.readBoard(bno);
+			//컨텐츠 내용 시큐어 코딩 처리
+			String xssData = securityCode.unscript(boardVO.getContent());
+			boardVO.setContent(xssData);
+			model.addAttribute("boardVO", boardVO);
+			return "home/board/board_update";
 		}
 	//사용자 홈페이지 게시판 작성 매핑 //오버로드(매개변수의 개수또는 타입이 틀린) 메소드이용
 	//jsp에서 board_write메소드를 호출
 	//컨트롤러에서 받을 때 사용하는 매개변수
 		@RequestMapping(value="/home/board/board_write",method=RequestMethod.POST)
-		public String board_write(BoardVO boardVO)throws Exception {
-			return "redirect:/home/board/board_view";
+		public String board_write(RedirectAttributes rdat,@RequestParam("file") MultipartFile[] files,BoardVO boardVO)throws Exception {
+			String[] save_file_names = new String[files.length];
+			String[] real_file_names = new String[files.length];
+			int index = 0;
+			for(MultipartFile file:files) {
+				if(file.getOriginalFilename() !="") {
+				save_file_names[index] = commonController.fileUpload(file);
+				real_file_names[index] = file.getOriginalFilename();//예를 들면 한글 파일명
+				}
+				index = index+1;
+			}
+			boardVO.setSave_file_names(save_file_names);
+			boardVO.setReal_file_names(real_file_names);
+			boardService.insertBoard(boardVO); // 실제 DB에 삽입
+			rdat.addFlashAttribute("msg","저장");
+			return "redirect:/home/board/board_list";
 		}
+	//사용자 홈페이지 게시판 작성 매핑
+		@RequestMapping(value="/home/board/board_write",method=RequestMethod.GET)
+		public String board_write()throws Exception {
+			return "home/board/board_write";
+		}
+	
 	//사용자 홈페이지 게시판 리스트 매핑
 	@RequestMapping(value="/home/board/board_list",method=RequestMethod.GET)
 	public String board_list(@ModelAttribute("pageVO") PageVO pageVO, Model model)throws Exception {
