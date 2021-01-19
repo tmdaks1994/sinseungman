@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* 공통영역*/
-.bbsListTbl a:hover, .pagination a:hover, .bbs_title a:hover {
+.bbsListTbl a:hover, .pagination a:hover, .bbs_title a:hover, .tit_lbl a:hover {
 	color:#000 !important;
 }
 

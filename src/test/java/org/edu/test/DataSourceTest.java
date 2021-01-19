@@ -22,6 +22,7 @@ import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,16 +38,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+//@PropertySource("classpath:properties/local.properties")
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
 @WebAppConfiguration
 public class DataSourceTest {
 
 	@Inject
 	DataSource dataSource;//자바에서처럼 new 오브젝트를 생성하지 않고, 스프링에서는 @Inject로 오브젝트 생성.
+	
 	@Inject
 	IF_MemberDAO memberDAO;
+	
 	@Inject
 	IF_BoardDAO boardDAO;
+	
 	@Inject//사용하면 않되는 이유: 클래스상단에 @Controller, @Service, @Repository, @Component 이런내용만 @Inject합니다.
 	MemberVO memberVO;//기존자바처럼 new MemberVO() 오브젝트를 생성하지않고, 주입해서사용. 
 
@@ -152,7 +157,7 @@ public class DataSourceTest {
 	public void oldQueryTest() throws Exception {
 		//Connection connection = dataSource.getConnection();//root-context사용
 		Connection connection = null;
-		connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db","sa","");
+		connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false","sa","");
 		//직접 쿼리를 날립니다.(아래)
 		Statement stmt = connection.createStatement();
 		/* 인서트 쿼리실행(아래) 

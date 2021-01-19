@@ -27,6 +27,14 @@ Json데이터 사용 pom.xml 의존성 추가.
 사용자단 CRUD 구현.
 오라클로 마이그레이션 작업.
 이후 유효성검사, 파스타클라우드, 네이버아이디 로그인(네이버에서 제공Rest-API백엔드단) 사용 등등. pom.xml 의존성 추가.
+#### Hsql 데이터베이스 사용 개선
+- jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db 이 내용이 사용된 부분에  ;hsqldb.lock_file=false를 추가하면, 사용시 lock이 걸리지 않고 톰캣과 Junit 동시 사용이 가능합니다.(아래 2가지 수정)
+- root-context.xml 과 
+- Junit 작업파일에서 oldQueryTest() 메서드 부분
+- 작업결과 아래와 같이 표현 됩니다.
+- jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false
+- 단, 기존에 만들었던 DB폴더에서 lock파일(hsql_file.lck)을 지우셔야 합니다.
+- 다음 실행 부터는 생성되지 않기 때문에 톰캣실행과 JUnit및 다른 프로그램 작업도 가능합니다.
 ####20210115(금)
 서블렛자바+JSP(jstlX)프로그램 - 스트러츠웹프로그램만들기 - 스프링+jsp(jstl)웹프로그램만들기
 DB부분 헤로쿠 베포: root-context에 Hsql DB위치 변경/temp/~ + 1회용 초기화 부분 주석 해제

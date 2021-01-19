@@ -1,5 +1,6 @@
 package org.edu.controller;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +9,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FilenameUtils;
+import org.edu.dao.IF_BoardDAO;
 import org.edu.service.IF_BoardService;
 import org.edu.util.CommonController;
 import org.edu.util.SecurityCode;
@@ -37,6 +40,8 @@ public class HomeController {
 	private IF_BoardService boardService;
 	
 	@Inject
+	private IF_BoardDAO boardDAO;
+	@Inject
 	private SecurityCode securityCode;
 	
 	@Inject
@@ -48,6 +53,24 @@ public class HomeController {
 			return "home/error/404";
 		}
 	
+		@RequestMapping(value="/home/board/board_delete",method=RequestMethod.POST)
+		public String board_delete(RedirectAttributes rdat, @RequestParam("bno") Integer bno, @RequestParam("page") Integer page)throws Exception{
+			//부모 게시판에 첨부파일 있다면 첨부파일 삭제처리후 게시글 삭제
+			List<AttachVO> delFiles= boardService.readAttach(bno);
+			if(delFiles.isEmpty()) {
+				for(AttachVO file_name:delFiles) {
+					File target = new File(commonController.getUploadPath(),file_name.getSave_file_name());
+					if(target.exists()) {
+						target.delete();
+					}
+				}
+			}
+			//DB에서 부모게시판에 댓글이 있으면 댓글삭제후 게시글 삭제
+			boardService.deleteBoard(bno);
+			rdat.addFlashAttribute("msg", "삭제");
+			return "redirect:/home/board/board_list?page=" +page;
+		}
+		
 	//사용자 홈페이지 게시판 보기 매핑
 		@RequestMapping(value="/home/board/board_view",method=RequestMethod.GET)
 		public String board_view(@RequestParam("bno") Integer bno,@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
@@ -75,12 +98,63 @@ public class HomeController {
 			return "home/board/board_view";
 		}
 		
+		@RequestMapping(value="/home/board/board_update",method=RequestMethod.POST)
+		public String board_update(RedirectAttributes rdat,@RequestParam("file") MultipartFile[] files, BoardVO boardVO, PageVO pageVO) throws Exception{
+			//게시판 테이블 업데이트
+			List<AttachVO> deFiles = boardService.readAttach(boardVO.getBno());
+			String [] save_file_names = new String[files.length];
+			String [] real_file_names = new String[files.length];
+			int index =0;
+			for(MultipartFile  file:files) {//여기로 file은 신규 저장하는 파일
+				if(file.getOriginalFilename() !="") {
+					int sun = 0;
+					for(AttachVO file_name:deFiles) {//실제 폴더에서 기존 첨부파일  삭제처리
+						if(index==sun) {
+							File target = new File(commonController.getUploadPath(),file_name.getSave_file_name());
+							if(target.exists()) {
+								target.delete();//기존 첨부파일 지우기
+								boardDAO.deleteAttach(file_name.getSave_file_name());
+							}
+						}
+						sun = sun +1;
+					}
+					//신규파일 폴더로 업로드
+					save_file_names[index] = commonController.fileUpload(file);//신규파일 폴더에 업로드
+					real_file_names[index] = file.getOriginalFilename();//신규파일 한글파일명 저장
+				}else {
+					save_file_names[index] = null;//신규파일 폴더에 업로드
+					real_file_names[index] = null;//신규파일 한글파일명 저장
+				}
+				index = index+1;
+			}
+			boardVO.setSave_file_names(save_file_names);
+			boardVO.setReal_file_names(real_file_names);
+			String xssData = boardVO.getContent();
+			boardVO.setContent(securityCode.unscript(xssData));
+			boardService.updateBoard(boardVO); //DB에 신규파일 저장기능 호출
+			
+			//게시판 테이블 업데이트+첨부파일 테이블 업뎃
+			rdat.addFlashAttribute("msg","수정");
+			return "redirect:/home/board/board_view?bno="+boardVO.getBno()+"&page="+pageVO.getPage();	
+		}
 		@RequestMapping(value="/home/board/board_update",method=RequestMethod.GET)
 		public String board_update(Model model, @ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
 			BoardVO boardVO = boardService.readBoard(bno);
-			//컨텐츠 내용 시큐어 코딩 처리
-			String xssData = securityCode.unscript(boardVO.getContent());
-			boardVO.setContent(xssData);
+			//첨부파일 처리
+			List<AttachVO> files = boardService.readAttach(bno);
+			//아래변수 List<AttachVO>새로배치를 가로배치로 변경
+			String[] save_file_names = new String[files.size()];
+			String[] real_file_names = new String[files.size()];
+			int cnt = 0;
+			//새로 데이터를 가로데이터로 변경로직
+			for(AttachVO file_name:files) {
+				save_file_names[cnt] = file_name.getSave_file_name();
+				real_file_names[cnt] = file_name.getReal_file_name();
+				cnt = cnt +1;
+			}
+			boardVO.setSave_file_names(save_file_names);
+			boardVO.setReal_file_names(real_file_names);
+			
 			model.addAttribute("boardVO", boardVO);
 			return "home/board/board_update";
 		}
@@ -101,6 +175,8 @@ public class HomeController {
 			}
 			boardVO.setSave_file_names(save_file_names);
 			boardVO.setReal_file_names(real_file_names);
+			String xssData = boardVO.getContent();
+			boardVO.setContent(securityCode.unscript(xssData));
 			boardService.insertBoard(boardVO); // 실제 DB에 삽입
 			rdat.addFlashAttribute("msg","저장");
 			return "redirect:/home/board/board_list";
@@ -141,8 +217,42 @@ public class HomeController {
 	
 	//사용자 홈페이지 루트(최상위) 접근 매핑
 	@RequestMapping(value="/",method=RequestMethod.GET)
-	public String home() throws Exception{
+	public String home(Model model) throws Exception{
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(1);
+		pageVO.setPerPageNum(5);//하단페이징
+		pageVO.setQueryPerPageNum(5);
+		List<BoardVO> board_list = boardService.selectBoard(pageVO);
+		//System.out.println("디버그" + board_list);
+		model.addAttribute("board_list", board_list);
 		
+		//첨부파일 1개만 model클래스를 이용해서 jsp로 보냄.
+		String[] save_file_names= new String[board_list.size()];
+		int cnt = 0;
+		for(BoardVO boardVO:board_list) {//board_list변수에는 최대 5개의 레코드가 존재
+			List<AttachVO> file_list =  boardService.readAttach(boardVO.getBno());
+			if(file_list.size() == 0) {
+				save_file_names[cnt] = "";
+				System.out.println("디버그[" + cnt + "]" + save_file_names[cnt]);
+				//continue;//티뉴 아래는 실행 하지 않고 
+			} else {
+				for(AttachVO file_name:file_list) {
+					String save_file_name = file_name.getSave_file_name();
+					String extName = FilenameUtils.getExtension(save_file_name);
+					boolean imgCheck = commonController.getCheckImgArray().contains(extName.toLowerCase());
+					if(imgCheck) {
+						save_file_names[cnt] = save_file_name;
+						System.out.println("디버그[" + cnt + "]" + save_file_names[cnt]);
+						break;//이중 반복문에서 현재 for문만 종료
+					} else {
+						save_file_names[cnt] = "";
+						System.out.println("디버그[" + cnt + "]" + save_file_names[cnt]);
+					}
+				}
+			}
+			cnt = cnt +1;
+		}
+		model.addAttribute("save_file_names",save_file_names);
 		return "home/home";
 	}
 	

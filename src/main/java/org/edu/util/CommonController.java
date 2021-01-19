@@ -97,7 +97,7 @@ public class CommonController {
 	
 	final HttpHeaders headers = new HttpHeaders(); //크롬 개발자도구 > 네트워크>image_preview클릭 > 헤더맵
 	String ext = FilenameUtils.getExtension(save_file_name);//파일 확장자 구하기
-	switch(ext) {
+	switch(ext.toLowerCase()) {
 		case "png":
 			headers.setContentType(MediaType.IMAGE_PNG);
 			break;
