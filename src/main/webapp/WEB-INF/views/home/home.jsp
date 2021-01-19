@@ -12,10 +12,10 @@
     	div.txt * { font-size: 14px !important;}
     	.length_limit{
     		display: block;
-	   padding-left: 14px;
-	   overflow: hidden;
-	   text-overflow: ellipsis;
-	   white-space: nowrap; 
+	    padding-left: 14px;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap; 
    	}
    	.oppacity_hover a:hover { opacity}
 </style>
