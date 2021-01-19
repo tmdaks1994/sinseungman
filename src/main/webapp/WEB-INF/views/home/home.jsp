@@ -22,10 +22,10 @@
 <script>
 $(document).ready(function(){
 	$(".opacity_hover img").on("mouseover",function(){
-		$(this img).css("opacity","1.0");
+		$(this).css("opacity","1.0");
 	});
 	$(".opacity_hover img").on("mouseout",function(){
-		$(this img).css("opacity","0.0");
+		$(this).css("opacity","0.8");
 	});
 });
 </script>
