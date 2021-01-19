@@ -17,7 +17,7 @@
             <list>
                 <!-- <value>classpath:/properties/local.properties</value>-->
                 <!-- 운영서버 베포일때 사용 -->
-                <value>file:/properties/prod.properties</value>
+                <value>classpath:/properties/prod.properties</value>
             </list>
         </property>
     </bean>
