@@ -32,9 +32,9 @@
 $(document).ready(function() {
 	$(".appForm").validate({
 		rules: {
-			password: "required",
-			password_chk: {
-				equalTo: "#password_lbl"
+			//user_pw: "required",
+			user_pw_chk: {
+				equalTo: "#user_pw_lbl"
 			}
 		}
 	});
@@ -46,7 +46,18 @@ $(document).ready(function() {
 	});
 });
 </script>
-	
+<script>
+//회원탈퇴 처리
+$(document).ready(function(){
+	$("#btn_member_disabled").on("click",function(){
+		if(confirm("정말로 탈퇴하시겠습니까?")){
+			$("form[name='mypage_form']").attr("action","/member/member_disabled");
+			$("input[name='enabled']").val('0');
+			$("form[name='mypage_form']").submit();
+		}
+	});
+});
+</script>
 	<!-- 메인콘텐츠영역 -->
 	<div id="container">
 		<!-- 메인상단위치표시영역 -->
@@ -65,7 +76,7 @@ $(document).ready(function() {
 		<div class="bodytext_area box_inner">
 			<div class="myinfo">내 정보</div>
 			<!-- 폼영역 -->
-			<form method="POST" name="join_form" action="join.html" class="appForm">
+			<form method="POST" name="mypage_form" action="/member/mypage_update" class="appForm">
 				<fieldset>
 					<legend>회원가입폼</legend>
 					<p class="info_pilsoo pilsoo_item">필수입력</p>
@@ -92,13 +103,13 @@ $(document).ready(function() {
 						<li class="clear">
 							<label for="user_pw_lbl" class="tit_lbl pilsoo_item">비밀번호</label>
 							<div class="app_content">
-							<input type="password" name="user_pw" class="w100p" id="user_pw_lbl" placeholder="비밀번호를 입력해주세요" required/>
+							<input type="password" name="user_pw" class="w100p" id="user_pw_lbl" placeholder="비밀번호를 입력해주세요" />
 							</div>
 						</li>
 						<li class="clear">
 							<label for="user_pw_chk_lbl" class="tit_lbl pilsoo_item">비밀번호확인</label>
 							<div class="app_content">
-							<input type="password" name="user_pw_chk" class="w100p" id="user_pw_chk_lbl" placeholder="비밀번로를 다시 입력해주세요" required/>
+							<input type="password" name="user_pw_chk" class="w100p" id="user_pw_chk_lbl" placeholder="비밀번로를 다시 입력해주세요" />
 							</div>
 						</li>
 						<li class="clear">
@@ -110,30 +121,33 @@ $(document).ready(function() {
 						<li class="clear">
 							<label for="enabled_lbl" class="tit_lbl pilsoo_item">회원권한</label>
 							<div class="app_content radio_area">
-								<select name="levels" class="gender" required>
-									<option value="ROLE_USER">일반사용자</option>
+								<select disabled name="" class="gender">
+									<option value="ROLE_USER" <c:out value="${(memberVO.levels eq 'ROLE_USER')?'selected':'' }" /> >일반사용자</option>
+									<option value="ROLE_ADMIN" <c:out value="${(memberVO.levels eq 'ROLE_ADMIN')?'selected':'' }" /> >관리자</option>
 								</select>
+								<input type="hidden" name="levels" value="${memberVO.levels}" readonly>
 							</div>
 						</li>
 						<li class="clear">
 							<label for="enabled_lbl" class="tit_lbl pilsoo_item">탈퇴여부</label>
 							<div class="app_content radio_area">
-								<input type="radio" readonly name="enabled" class="css-radio" id="enabled_lbl" checked="" />
+								<input <c:out value="${(memberVO.enabled eq 'true')?'checked':''}" /> disabled type="radio" readonly name="" class="css-radio" id="enabled_lbl" />
 								<label for="enabled_lbl">회원사용</label>
-								<input type="radio" readonly name="enabled" class="css-radio" id="disabled_lbl" />
+								<input <c:out value="${(memberVO.enabled eq 'false')?'checked':''}" /> disabled type="radio" readonly name="" class="css-radio" id="disabled_lbl" />
 								<label for="disabled_lbl">회원탈퇴</label>
+								<input type="hidden" name="enabled" value="${memberVO.enabled}" readonly>
 							</div>
 						</li>
 						<li class="clear">
 							<label for="agree_lbl" class="tit_lbl pilsoo_item">개인정보활용동의</label>
-							<div class="app_content checkbox_area"><input type="checkbox"" name="agree" class="css-checkbox" id="agree_lbl" required checked/>
+							<div class="app_content checkbox_area"><input disabled type="checkbox"" name="agree" class="css-checkbox" id="agree_lbl" required checked/>
 							<label for="agree_lbl" class="agree">동의함</label>
 							</div>
 						</li>
 					</ul>
 					<p class="btn_line">
-					<button class="btn_baseColor">정보수정</button>
-					<button class="btn_baseColor">회원탈퇴</button>
+					<button type="submit" class="btn_baseColor">정보수정</button>
+					<button type="button" class="btn_baseColor" id="btn_member_disabled">회원탈퇴</button>
 					</p>	
 				</fieldset>
 			</form>
@@ -141,6 +155,6 @@ $(document).ready(function() {
 		</div>
 		<!-- //메인본문영역 -->
 	</div>
-	<!-- //메이콘텐츠영역 -->
+	<!-- //메인콘텐츠영역 -->
 	
 <%@ include file="../include/footer.jsp" %>

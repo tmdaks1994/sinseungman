@@ -10,7 +10,11 @@ if("${param.msg}" == "fail") {
 	alert('로그인에 실패 했습니다. ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}' );
 }
 </script>
-
+<script>
+$(document).ready(function(){
+	$("input[name='user_id']").focus();//초기 페이지 로딩 진입시 첫번째 입력위치로 이동
+});
+</script>
 	<!-- 메인콘텐츠영역 -->
 	<div id="container">
 		<!-- 메인상단위치표시영역 -->
