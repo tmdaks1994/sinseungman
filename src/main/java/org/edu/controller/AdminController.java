@@ -298,7 +298,9 @@ public class AdminController {
 	public String member_update(PageVO pageVO,@Valid MemberVO memberVO) throws Exception {
 		//POST방식으로 넘어온 값을 DB수정처리하는 역할
 		//POST방식으로 넘어온 user_pw값을 BCryPasswordEncoder클래스로 암호시킴
-		if(memberVO.getUser_pw() != null) {
+		if(memberVO.getUser_pw() == null || memberVO.getUser_pw() =="") {
+			
+		}else {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String userPwEncoder = passwordEncoder.encode(memberVO.getUser_pw());
 			memberVO.setUser_pw(userPwEncoder);
