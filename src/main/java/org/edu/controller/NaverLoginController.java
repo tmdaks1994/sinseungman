@@ -18,13 +18,13 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 
 @Controller
 public class NaverLoginController {
-	/**
+	/*
 	 * 네이버 API서버로 보내는 인증 요청문을 구성하는 파라미터
 	 * client_id : 네이버 App등록 후 발급받은 클라이언트 아이디
 	 */
 	private final static String CLIENT_ID = "1Y_t6LNQULkOGQUbtFxE";
 	private final static String CLIENT_SECRET = "Hl2hCeZImM";
-	private final static String REDIRECT_URI = "http://127.0.0.1:8080/login";
+	private final static String REDIRECT_URI = "http://127.0.0.1:8080/login_callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL - 사용자 이름+사용자이메일 */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";

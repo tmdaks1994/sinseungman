@@ -23,7 +23,15 @@ public class LoginController {
 	
 	@Inject
 	private IF_MemberService memberService;
-	//로그인 후 세션 처리
+	
+	//로그인후 세션 처리 - 네이버 아이디로 로그인
+	@RequestMapping(value="/login_callback",method=RequestMethod.GET)
+	public String login_callback() {
+		
+		return null;
+	}
+	
+	//로그인 후 세션 처리 - 스프링 시큐리티 로직일때
 	@RequestMapping(value="/login_success",method=RequestMethod.GET)
 	public String login_success(HttpServletRequest request, RedirectAttributes rdat) throws Exception {
 		//세션 변수 만들기
