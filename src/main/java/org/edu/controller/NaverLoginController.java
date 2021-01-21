@@ -5,7 +5,10 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.edu.util.NaverLoginApi;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
@@ -16,14 +19,16 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
+@PropertySource("classpath:properties/local.properties")//현재클래스에서 전역변수사용시 필요 
 @Controller
 public class NaverLoginController {
 	/*
 	 * 네이버 API서버로 보내는 인증 요청문을 구성하는 파라미터
 	 * client_id : 네이버 App등록 후 발급받은 클라이언트 아이디
 	 */
+
 	private final static String CLIENT_ID = "1Y_t6LNQULkOGQUbtFxE";
-	private final static String CLIENT_SECRET = "Hl2hCeZImM";
+	private final static String CLIENT_SECRET = "-------";
 	private final static String REDIRECT_URI = "http://127.0.0.1:8080/login_callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL - 사용자 이름+사용자이메일 */

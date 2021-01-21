@@ -49,7 +49,9 @@ if('${msg}' != '') {
 					<c:choose>
 						<c:when test="${session_enabled eq 'true'}">
 							<li><a href="#">${session_username} 님 환영합니다.</a></li>
-							<li><a href="/member/mypage">마이페이지</a></li>
+							<c:if test="${session_type eq 'normal'}">
+								<li><a href="/member/mypage">마이페이지</a></li>
+							</c:if>
 							<li><a href="/logout">로그아웃</a></li>
 							<c:if test="${session_levels eq 'ROLE_ADMIN'}">
 								<li><a href="/admin">AdminLTE</a>
