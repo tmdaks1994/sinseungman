@@ -19,7 +19,7 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
-@PropertySource("classpath:properties/local.properties")//현재클래스에서 전역변수사용시 필요 
+@PropertySource("classpath:properties/sns.properties")
 @Controller
 public class NaverLoginController {
 	/*
@@ -27,9 +27,15 @@ public class NaverLoginController {
 	 * client_id : 네이버 App등록 후 발급받은 클라이언트 아이디
 	 */
 
-	private final static String CLIENT_ID = "1Y_t6LNQULkOGQUbtFxE";
-	private final static String CLIENT_SECRET = "-------";
-	private final static String REDIRECT_URI = "http://127.0.0.1:8080/login_callback";
+	@Value("${SnsClientID}")
+	private String CLIENT_ID;
+	@Value("${SnsClientSecret}")
+	private String CLIENT_SECRET;
+	@Value("${SnsCallbackUri}")
+	private String REDIRECT_URI;
+	//private final static String CLIENT_ID = "1Y_t6LNQULkOGQUbtFxE";
+	//private final static String CLIENT_SECRET = "-------";
+	//private final static String REDIRECT_URI = "http://127.0.0.1:8080/login_callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL - 사용자 이름+사용자이메일 */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
