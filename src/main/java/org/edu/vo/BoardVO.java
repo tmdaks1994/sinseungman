@@ -10,6 +10,7 @@ import java.util.Date;
 public class BoardVO {
 	//멤버변수 선언
 	private Integer bno;//int은 입력값이 null일때 에러나기  때문에, Interger로 변경
+	private String board_type;//게시판 종류: 게시판ID
 	private String title;
 	private String content;
 	private String writer;
@@ -86,6 +87,13 @@ public class BoardVO {
 	}
 	public void setReal_file_names(String[] real_file_names) {
 		this.real_file_names = real_file_names;
+	}
+	public String getBoard_type() {
+		this.board_type = "notice";
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
 	}
 	
 }

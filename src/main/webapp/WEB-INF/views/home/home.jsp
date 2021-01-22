@@ -85,7 +85,7 @@ $(document).ready(function(){
 					<li class="opacity_hover">
 						<a href="/home/board/board_view?bno=${boardVO.bno}&page=1">
 						<div style="height:270px;overflow:hidden">
-							<c:if test="${save_file_names[0] eq ''}">
+							<c:if test="${save_file_names[status.index] eq ''}">
 								<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO" style="opacity:0.7;"/>
 							</c:if>
 							<c:if test="${save_file_names[status.index] ne '' }">

@@ -70,10 +70,14 @@ $(document).ready(function(){
 	//2개의 값을 비교2: 비교대상 current_2(현재 웹브라우저의 URL값중 제일 마지막 값)
 	//includes 함수는 크롬에서만 작동이 되어서 IE에서는 작동이 안됨.
 	$(".nav-treeview li a").each(function(){
-		if( $(this).attr('href').indexOF(current_2) != -1 ){
-			$(this).addClass("active");
+		if( $(this).attr('href').indexOF(current_2) != -1){
+			if(current_2 != 'board'){
+				$(this).addClass("active");//선택한 메뉴의 배경색상을 흰색으로 보이게 추가하는 처리.
+			}
 		} else{
-			$(this).removeClass("active");
+			if(current_2 != 'board'){
+				$(this).removeClass("active");//선택하지 않은 메뉴의 배경색상 흰색을 제거하는 처리.
+			}
 		}
 	});//each함수로 a태그 2개를 찾는 명령.
 });

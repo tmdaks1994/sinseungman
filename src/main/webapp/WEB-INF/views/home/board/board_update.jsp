@@ -133,7 +133,7 @@
 						dataType:"text",
 						success:function(result){
 							if(result=="success"){
-								click_btn.parents().find(".div_file").remove();
+								click_btn.parents(".div_file").remove();
 							}
 						},
 						error:function(result){

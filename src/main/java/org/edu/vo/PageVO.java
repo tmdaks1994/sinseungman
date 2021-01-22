@@ -9,6 +9,7 @@ package org.edu.vo;
  *
  */
 public class PageVO {
+	private String board_type;
 	//예를 들면 변수 중에 boolean(일반형테이터형변수) / boolean(대문자로시작-클래스형변수-Null로 입력되었을때 처리하는 로직이 들어 있습니다)
 	private int perPageNum;//1페이지당 출력할 개수값이 들어가는 변수
 	private int queryPerPageNum;//쿼리에서 사용하는 1페이지당 출력할 개수값 변수
@@ -26,6 +27,15 @@ public class PageVO {
 	private String search_type;//검색조건
 	private String search_keyword;//검색어
 	
+	
+	public String getBoard_type() {
+		this.board_type = "notice";//세션변수를 사용할 예정.
+		return board_type;
+	}
+
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
 	//전체 클래스에서 [계산식]이 4개 필요합니다. 개발자가 만들어야 합니다.(아래)
 	//계산식4개로 반환되는 값은: startPage(11), endPage(20), prev(true), next(false)
 	//아래 메서드에서 사용되는 totalCount변수는 컨트롤러에서 쿼리문을 통해서 전송받습니다.
