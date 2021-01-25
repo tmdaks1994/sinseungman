@@ -89,7 +89,7 @@ public class BoardVO {
 		this.real_file_names = real_file_names;
 	}
 	public String getBoard_type() {
-		this.board_type = "notice";
+		//this.board_type = "notice"; //세션값 사용예정
 		return board_type;
 	}
 	public void setBoard_type(String board_type) {

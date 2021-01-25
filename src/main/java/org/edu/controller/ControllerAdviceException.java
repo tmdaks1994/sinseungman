@@ -1,13 +1,30 @@
 package org.edu.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.edu.dao.IF_BoardTypeDAO;
+import org.edu.vo.BoardTypeVO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice //컨트롤러에서 발생되는 CRUD액션을 중간에 가로채는 기능클래스
 public class ControllerAdviceException {
+	@Inject
+	private IF_BoardTypeDAO boardTypeDAO;
+	
+	@ModelAttribute("board_type_list")
+	public List<BoardTypeVO> board_type_list() throws Exception {
+		List<BoardTypeVO> board_type_list = boardTypeDAO.select_board_type();
+		return board_type_list;
+	}
+	
+	//컨트롤러 매핑 걸린 모든 메소드에서 공통으로 사용할 modelAttribute 생성
+	
 	//ModelAndView클래스는 변환 jsp로 반환시 값을 저장하는 역할
 	//언제아래 메소드가 명시하는 클래스
 	@ExceptionHandler(Exception.class)

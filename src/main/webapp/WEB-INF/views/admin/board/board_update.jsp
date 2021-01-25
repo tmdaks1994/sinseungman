@@ -40,7 +40,16 @@
               </div>
               <!-- /.card-header -->
               
-                <div class="card-body">
+              <div class="card-body">
+                  <div class="form-group">
+                  <label for="board_type">게시판타입</label>
+                 	<select name="board_type" id="board_type" class="form-control">
+                 		<c:forEach items="${board_type_list}" var="boardTypeVO">
+                    		<option value="${boardTypeVO.board_type}" <c:out value="${(session_board_type eq boardTypeVO.board_type)?'selected':'' }" />>${boardTypeVO.board_name}</option>
+                   		</c:forEach>
+                  	</select>
+                  </div>
+
                   <div class="form-group">
                     <label for="title">title</label>
                     <input type="text" value="${boardVO.title}" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요." required>
