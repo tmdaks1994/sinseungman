@@ -7,8 +7,7 @@ public class BoardTypeVO {
 	
 	@Override
 	public String toString() {
-		return "BoardTypeVO [board_type=" + board_type + ", board_name=" + board_name + ", board_sun=" + board_sun
-				+ "]";
+		return board_type;
 	}
 	public String getBoard_type() {
 		return board_type;

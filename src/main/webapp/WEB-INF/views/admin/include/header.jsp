@@ -9,6 +9,9 @@
 if('${msg}' != '') {
 	alert("${msg}가(이) 성공하였습니다.");
 }
+if('${msg_fail}' != ''){
+	alert("${msg_fail} 가(이) 실패!!");
+}
 </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
