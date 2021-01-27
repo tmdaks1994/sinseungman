@@ -1,0 +1,58 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TBL_REPLY" directorySegmentName="seg_0" id="F7D7271A-B41B-12F5-1CEF-CEA6951AA733">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:37:43 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="REG_DATE" id="5F38E72B-F70E-6A06-7B5B-401926E8C916">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BNO" id="B024A959-EE84-DEA8-2A5A-6A66A6058E5A">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:31 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REPLY_TEXT" id="B115E747-93DA-739B-6A9B-D488B0736A76">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="RNO" id="BA9785C3-2865-0DAD-FE0F-6D460A0F0127">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REPLYER" id="D8045BFA-6EEB-00EE-37F4-F1FD8C2E60AA">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="D8FBBC3E-9DCA-B563-30B4-F5E809AC08DA">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="TBL_REPLY_TBL_BOARD_FK" id="DFD79CF8-92C8-BABF-2770-738054A8208B">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:31 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TBL_REPLY_PK" id="5F420297-E640-3DAF-6939-2F27B7DDCB07">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:03 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

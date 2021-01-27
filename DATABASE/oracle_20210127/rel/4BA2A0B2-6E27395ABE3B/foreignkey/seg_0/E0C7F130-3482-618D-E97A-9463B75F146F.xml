@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E0C7F130-3482-618D-E97A-9463B75F146F" containerWithKeyObject="F7D7271A-B41B-12F5-1CEF-CEA6951AA733" localFKIndex="DFD79CF8-92C8-BABF-2770-738054A8208B" name="TBL_REPLY_TBL_BOARD_FK">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:41:31 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<referredTableLongName>TBL_BOARD</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>FF335E11-12D6-91DE-C555-B84389961E26</referredTableID>
+<keyObject>19DFAE04-6F41-8B01-A22A-C27033C519FA</keyObject>
+<referredKeyID>19DFAE04-6F41-8B01-A22A-C27033C519FA</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>BNO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

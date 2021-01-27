@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TBL_BOARD" directorySegmentName="seg_0" id="FF335E11-12D6-91DE-C555-B84389961E26">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:08:04 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="BOARD_TYPE" id="26DFED74-5DC5-C175-EA6E-A0FEF52FF5E5">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REPLY_COUNT" id="3E57B6E3-D659-E834-1A8C-6EB07EFF2253">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="VIEW_COUNT" id="3FF52306-AEB3-BC5F-7A50-0FF585499EAE">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="UPDATE_DATE" id="500A93BE-2BC3-1BA7-3A70-5C4B1287E707">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="WRITER" id="54D9A183-8C64-D7BF-D95E-FCA2113624AC">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BNO" id="6581DDE4-1D40-A39E-68C9-E863D1B387D8">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TITLE" id="99CFA769-92F5-AB0B-7CA7-48F9A9CB0C75">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REG_DATE" id="B6ECDD83-5B1E-136D-9687-EC11F11A3C21">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CONTENT" id="E1D929DA-AA96-CB8A-0E22-4D76AD8023FE">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TBL_BOARD_PK" id="19DFAE04-6F41-8B01-A22A-C27033C519FA">
+<createdBy>뚫어봐</createdBy>
+<createdTime>2021-01-27 03:18:58 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
