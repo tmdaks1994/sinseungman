@@ -42,6 +42,56 @@ DB부분 Pc용으로 작업 : root-context에 Hsql DB위치 변경 c:/~ 1회원 
 첨부파일 업로드 경로 변경:
 헤로쿠: /temp/~
 pc: C:~
+
+20210129(금) 작업
+이론 단원 05단원 까지 진도OK.
+오라클 전용 쿼리에서 3개이상의 문자열 연결할때 파이프라인 특수문자를 사용: ||
+DISTINCT: 오라클 전용으로 중복데이터 삭제용도, 출력물에서 셀병합시 필요.
+보통 출력툴(레포트툴)이 보통 2000만원이상.
+자바프로그램에서 특수문자는 \s 로 s라는 문자가 아니고, 공백이라는 특수문자임을 \s 나타냄.
+위와 같은 \문자에서 \ 역슬래시를 이스케이프 문자라고 하고 정규표현식에서 많이 사용됨.
+산술연산자: +,-,*,/
+논리연사자: OR(+) , AND(*), NOT(!Inverse)
+필드명 BETWEEN a AND b: 필드값이 a 에서부터 b 까지~
+필드명 IN(배열) : 필드명에 배열에 있는 값이 포함되어 있는지 비교.
+교재용 영문테이블명: DEPT(부서테이블), EMP(사원테이블)
+교재용 쇼핑몰테이블: DEMO_CUSTOMERS(고객테이블), ORDERS(주문정보-부모테이블)
+쇼핑몰이어서: ORDER_ITEMS(주문정보상세-자식테이블)
+쇼핑몰이어서: PRODUCT_INFO(상품등록테이블), STATES(배송주소정보테이블)
+쇼핑몰이어서: DEMO_USERS(쇼핑몰관리자 직원테이블)
+서블렛 + JSP = 쇼핑몰 웹사이트=> 스트러츠 => 대신에 스프링으로 MVC 웹프로젝트 제작.
+테이블 정보(메타데이터=데이터딕셔너리=정보의정보)와 테이블 내용(데이터-예,게시판데이터) 차이 확인.
+SQL*PLUS는 CLI(명령어라인인터페이스)와 SQL디벨러퍼는 GUI(그래픽유저인터페이스)
+아래 매퍼내용 수정1~5 참조해서 reply, member 쿼리 확인 후 수정조치.
+오라클에서 첨부파일 신규등록 확인(필수)OK.
+매퍼쿼리는 commit;하지 않아도 스프링이 자동 커밋해 줍니다.
+20210128(목) 작업
+테스트절차: 게시물신규등록, 게시물신규등록시 첨부파일도 신규등록.
+이론 단원04까지 진도.
+매퍼(마이바티스)쿼리에서 오라클전용일때 수정할 부분요약: boardMapper.xml만 처리중.
+참고: Hsql용 최근게시물 ㅂ1개 뽑아낼떄: select top 1 bno from tbl_board order by bno desc
+DELETE와 TRUNCATE 차이점: 둘다 테이블내용을 삭제하는 것은 동일.
+DELETE: 100개의 레코드를 지우면, 내용은 지워지지만, 100개의 공간은 남아있음.
+TRUNCATE: 100개의 레코드를 지우면, 내용도 지우고, 100개의 공간도 날아갑니다.
+AI 자동증가 값이 DELETE이후 신규등록하면, 101 로 자동증가값이 잡힙니다.
+TRUNCATE이후 신규등록하면, 1로 자동증가값이 잡힙니다.
+접속 세션에서 COMMIT;을 하지 않으면, 접속해제시 작업한 내용이 사라짐. 반드시, 커밋필요.
+SQL*PLUS: RUN SQL Command 실행 -> CONNECT XE/apmsetup XE사용자로 접속.
+SELECT * FROM TBL_BOARD_TYPE;
+시작전 어제 백업받은 DATABASE폴더에 oracle_20210127.sql 파일 복원 다같이 합니다OK.
+스프링 프로젝트를 오라클로 마이그레이션하기 전 이클립스 준비 작업OK.
+ojdbc6.jar등록: 스프링에서 오라클서버에 접속하는 드라이버 클래스파일 입니다OK.
+이번에는 pom.xml로 외부모듈을 추가하지 X, 직접 jar파일 외부모듈을 등록하겠습니다OK.
+오라클 교재(IT강의저장소의교재)를 가지고 , 이론 진도 나갑니다.
+SQL: Structured Query Language(구조화된 질의 언어) CRUD를 목적의 언어.
+Ansi SQL: (미국)표준SQL 언어.----< 표준SQL위주로 공부하셔야 합니다.
+오라클회사의 전용 SQL(전용함수이용 기능많음), MS마이크로소프트회사 전용 SQL.
+DQL(Select): Data Query Language: 데이터 질의어.
+DDL(Crate Table, Alter Table):Data Definition Language 데이터 정의.
+DML(Insert,Update,Delete):Data Manufacturing Language 조작언어.
+DCL(Dump 백업, Grant-권한): Data Controll Language 데이터 제어 언어.
+root-context.xml 에서 오라클 커넥션 bean(스프링용클래스)을 생성하고, mybatis용 쿼리 생성예정.
+
 20210127(수) 작업
 오라클데이터베이스 서버 관리 화면 기본 URL:8080 을 사용합니다.
 톰캣기반의 스프링웹프로젝트 http://localhost:8080 를 실행한 상태에서 오라클을 설치해야 8080을 피해서 9000포트로 설치할 수 있습니다.OK

@@ -15,15 +15,15 @@ memberMapper.xml: 회원관리에대한 모든 쿼리를 모아서 관리하는 
 	<if test="search_type != '' and search_type !=null">
 		where
 		<if test="search_type == 'all'.toString()">
-				user_id like concat('%',#{search_keyword},'%')
+				user_id like '%'||#{search_keyword}||'%'
 				or
-				user_name like concat('%',#{search_keyword},'%')
+				user_name like '%'||#{search_keyword}||'%'
 		</if>
 		<if test="search_type == 'user_id'.toString()">
-	 			user_id like concat('%',#{search_keyword},'%')
+	 			user_id like '%'||#{search_keyword}||'%'
 	 	</if>
 	 	<if test="search_type == 'user_name'.toString()">
-	 			user_name like concat('%',#{search_keyword},'%')
+	 			user_name like '%'||#{search_keyword}||'%'
 	 	</if>
 	</if>
 </sql>
@@ -34,10 +34,20 @@ select count(*) from tbl_member
 </select>
 
 <select id="selectMember" resultType="org.edu.vo.MemberVO">
-select * from tbl_member 
-<include refid="sqlWhere"></include>
-order by reg_date desc
-limit #{queryStartNo}, #{queryPerPageNum}
+
+select table_b.* from
+(
+    select ROWNUM as RNUM, table_a.* from
+    <include refid="sqlWhere"></include>
+    <![CDATA[
+    (
+        select * from tbl_member
+        order by reg_date DESC
+    ) table_a
+    where ROWNUM <= (#{queryStartNo}/#{queryPerPageNum}+1) * #{queryPerPageNum}
+)table_b
+where table_b.rnum > (#{queryStartNo}/#{queryPerPageNum}) * #{queryPerPageNum}
+]]>
 </select>
 
 <insert id="insertMember">
@@ -58,7 +68,7 @@ INSERT INTO tbl_member (
 	#{point},
 	#{enabled},
 	#{levels},
-	now()
+	sysdate
 )
 </insert>
 <!-- jsp에서는 변수를 $(변수명)로 표현했지만 마이바티스는 변수표현을 #{변수명}으로 표기-->
@@ -75,7 +85,7 @@ SET
     point = #{point},
     enabled = #{enabled},
     levels = #{levels},
-    update_date = now()
+    update_date = sysdate
 WHERE
     user_id = #{user_id}
 </update>

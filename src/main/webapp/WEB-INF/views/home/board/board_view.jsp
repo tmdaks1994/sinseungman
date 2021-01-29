@@ -75,7 +75,7 @@
 	          <div class="card-body">
 	          	<div class="form-group">
                    <label for="replyer">Writer</label>
-                   <input type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해 주세요." required>
+                   <input value="${session_username}" type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해 주세요." required>
                    <!-- 폼에서 input같은 입력태그에는 name속성이 반드시 필요, 이유는 DB에 입력할때,
                    	 값을 전송하게 되는데, 전송값을 담아두는 이름이 name가 되고, 위에서는 writer 입니다. -->
                 </div>
@@ -305,6 +305,7 @@ $(document).ready(function(){
 				success:function(result) {//응답이 성공하면(상태값200)위경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
 					//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듭니다.
 					var reply_count = $("#reply_count").text();
+					if(reply_count == "") {reply_count=0;} //DB 초기값이 null일때 체크
 					$("#reply_count").text(parseInt(reply_count)+1);
 					$("#reply_page").val("1");
 					replyList();//댓글입력 후 리스트 출력함수 호출

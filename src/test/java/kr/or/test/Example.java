@@ -5,23 +5,13 @@ public class Example {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		int sum =0;
-		for(int i =1; i<=100; i++){
-			if(i%3 ==0) {
-				sum += i;
-			} 
-		}
-		System.out.println("3의배수 합 : " + sum);
+		int[] intArray = new int [5];
 
-		int j=0;
-		int k=0;
-		while(true) {
-			j=(int)(Math.random()*6);
-			k=(int)(Math.random()*6);
-			System.out.println(j+","+k);
-			if(j+k == 5) {
-				break;
-			}
+		for(int i=intArray.length-1; i>=0; i--) {
+			intArray[i] = i+1;
+		}
+		for(int i=0; i<intArray.length; i++) {
+			System.out.print(intArray[i]);
 		}
 	}
 }
