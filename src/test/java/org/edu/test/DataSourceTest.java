@@ -141,8 +141,8 @@ public class DataSourceTest {
 	public void selectMember() throws Exception {
 		//"user_name","메렁"
 		PageVO pageVO = new PageVO();
-		pageVO.setSearch_type("user_name");
-		pageVO.setSearch_keyword("메렁");
+		pageVO.setSearch_type("user_id");
+		pageVO.setSearch_keyword("admin");
 		
 		pageVO.setPage(1);
 		pageVO.setPerPageNum(5);//리스트 하단에 보이는 페이징번호의 개수

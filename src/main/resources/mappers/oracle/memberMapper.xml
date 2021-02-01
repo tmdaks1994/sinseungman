@@ -34,19 +34,18 @@ select count(*) from tbl_member
 </select>
 
 <select id="selectMember" resultType="org.edu.vo.MemberVO">
-
-select table_b.* from
+select TABLE_B.* from
 (
-    select ROWNUM as RNUM, table_a.* from
-    <include refid="sqlWhere"></include>
-    <![CDATA[
+    select ROWNUM as RNUM, TABLE_A.* from
     (
-        select * from tbl_member
-        order by reg_date DESC
-    ) table_a
+	    select * from TBL_MEMBER
+	    <include refid="sqlWhere"></include>
+	    order by reg_date DESC
+    ) TABLE_A
+<![CDATA[
     where ROWNUM <= (#{queryStartNo}/#{queryPerPageNum}+1) * #{queryPerPageNum}
-)table_b
-where table_b.rnum > (#{queryStartNo}/#{queryPerPageNum}) * #{queryPerPageNum}
+) TABLE_B
+where TABLE_B.rnum > (#{queryStartNo}/#{queryPerPageNum}) * #{queryPerPageNum}
 ]]>
 </select>
 

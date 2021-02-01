@@ -168,6 +168,7 @@ jstl을 사용하려면, jsp에서 @taglib uri=... 처럼 외부 core를 가져�
 			success:function(result){
 				if(result=="undefined" || result=="" || result==null){
 					$("#div_reply").empty();
+					$("#div_reply").html('<div class="pagination justify-content-center"><ul class="pagination pageVO"></ul></div>');
 					alert("조회된 값이 없습니다.");
 				}else{
 					printReplyList(result.replyList, $("#div_reply"),$("#template"));//댓글리스트출력
