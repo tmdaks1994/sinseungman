@@ -30,7 +30,7 @@
  		<div class="row"> <!-- 부트스트랩의 디자인클래스 row -->
           <div class="col-12"> <!-- 그리드시스템중12가로 칼럼 width:100% -->
            <!-- form start -->
-           <form name="update_form" action="/admin/member/member_update" method="post">
+           <form encType="multipart/form-data" name="update_form" action="/admin/member/member_update" method="post">
           <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">UPDATE Member</h3>
@@ -44,6 +44,15 @@
                   	<!-- 폼에서 input같은 입력태그에는 name속성이 반드시 필요, 이유는 DB에 입력할떄, 
                   	값을 전송하게 되는데 , 전송값을 저장하는 이름이 name가 되고, 위에서는-->
                   </div>
+                  <div class="form-group">
+                  	<label>프로필 이미지
+                  	<img onerror="this.src='/resources/dist/img/default-150x150.png'" class="img-circle" style="width:50px;height:50px;" src="/resources/profile/${memberVO.user_id}.jpg" />
+                  	</label>
+	                <div class="custom-file">
+	                  <input accept=".jpg" type="file" name="file" class="custom-file-input" id="customFile_0">
+	                  <label class="custom-file-label" for="customFile_0" style="color:#999;">jpg형식만 지원합니다.</label>
+		            </div>
+	              </div>
                   <div class="form-group">
                     <label for="user_pw">Password</label>
                     <input maxlength="10" minlength="5" value="" type="password" class="form-control" name="user_pw" id="user_pw" placeholder="암호를 입력해주세요.">
@@ -101,3 +110,11 @@
   <!-- /.content-wrapper -->
 
 <%@ include file="../include/footer.jsp" %>
+<!-- 첨부파일 부트스트랩 디자인 JS -->
+<script src="/resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- 첨부파일 선택한 내용 출력 실행 -->
+<script>
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
+</script>
